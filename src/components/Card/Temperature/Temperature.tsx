@@ -18,8 +18,9 @@ const TextDateWrapper = styled.div`
     font-size: 32px;
 `;
 
+type PropsType = {};
 
-function Temperature() {
+const Temperature: React.FC<PropsType> = () => {
     return <Wrapper>
         <TextTemperatureWrapper>27°C</TextTemperatureWrapper>
         <TextDateWrapper>05/18 Четверг</TextDateWrapper>

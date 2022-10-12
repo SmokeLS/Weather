@@ -30,7 +30,10 @@ const Img = styled.img.attrs(({src}) => ({
     width: 100px;
 `;
 
-function Forecast() {
+type PropsType = {
+}
+
+const Forecast: React.FC<PropsType> = ({}) => {
     return <Wrapper>
         <TextWrapper>18:23</TextWrapper>
         <ImgWrapper>

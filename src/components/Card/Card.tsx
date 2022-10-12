@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { setCurrentWeather } from '../../redux/app-reducer';
+
 import Forecast from './Forecast/Forecast';
 import Weather from './Weather/Weather';
 import Temperature from './Temperature/Temperature';
+import { weatherAPI } from '../../api/api';
+import { AppStateType } from '../../redux/redux-store';
 
 const CardWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -27,20 +32,29 @@ const BottomSection = styled.div`
   flex-direction: row;
 `;
 
-function Card() {
+type PropsType = {};
+
+const Card: React.FC<PropsType> = () => {
+  const dispatch = useDispatch();
+  const currentWeather = useSelector((state : AppStateType) => state.app.currentWeather);
+
+  useEffect(() => {
+    dispatch(setCurrentWeather("Moscow"));
+  }, []);
+  
   return (
     <CardWrapper>
       <UpperSection>
-        <Weather />
+        <Weather currentWeather={currentWeather}/>
         <Temperature />
       </UpperSection>
       <BottomSection>
-        <Forecast />
-        <Forecast />
-        <Forecast />
-        <Forecast />
-        <Forecast />
-        <Forecast />
+          <Forecast/>
+          <Forecast/>
+          <Forecast/>
+          <Forecast/>
+          <Forecast/>
+          <Forecast/>
       </BottomSection>
     </CardWrapper>
   );
