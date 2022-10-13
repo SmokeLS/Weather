@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
 import rainy from '../../assets/rainy.png';
+import Dialog from '@mui/material/Dialog';
 
 import Forecast from './SliderForecast/Forecast/Forecast';
 import SliderForecast from './SliderForecast/SliderForecast';
@@ -101,7 +102,9 @@ const Card: React.FC<PropsType> = () => {
 
   return (
     <>
-      {/* <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen} /> */}
+      <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
+        <div>content</div>
+      </Dialog>
       <CardWrapper>
         <UpperSection>
           <Weather />
