@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { WeatherType } from '../types/types';
+import { ForecastType, WeatherType } from '../types/types';
 
 const instance = axios.create({
   baseURL: 'https://api.openweathermap.org/data/2.5/',
@@ -17,7 +17,7 @@ export const weatherAPI = {
     return res.data;
   },
   async getForecast(city: string) {
-    const res = await instance.get<CountResponse>(
+    const res = await instance.get<ForecastType>(
       `forecast?appid=0e2def30c3069fd2e56f866c8c70d407&q=${city}`,
     );
     return res.data;

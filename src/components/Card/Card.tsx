@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { setCurrentWeather } from '../../redux/app-reducer';
+import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
 
 import Forecast from './Forecast/Forecast';
 import Weather from './Weather/Weather';
@@ -35,17 +35,20 @@ const BottomSection = styled.div`
 type PropsType = {};
 
 const Card: React.FC<PropsType> = () => {
+
   const dispatch = useDispatch();
-  const currentWeather = useSelector((state : AppStateType) => state.app.currentWeather);
+  const forecast = useSelector((state: AppStateType) => state.app.forecast);
 
   useEffect(() => {
-    dispatch(setCurrentWeather("Moscow"));
-  }, []);
-  
+      dispatch(setForecast("Moscow"));
+  },[dispatch])
+
+  console.log(forecast);
+
   return (
     <CardWrapper>
       <UpperSection>
-        <Weather currentWeather={currentWeather}/>
+        <Weather/>
         <Temperature />
       </UpperSection>
       <BottomSection>

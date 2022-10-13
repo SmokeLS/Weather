@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import rainy from '../../../assets/rainy.png';
+import { setForecast } from '../../../redux/app-reducer';
+import { AppStateType } from '../../../redux/redux-store';
 
 const Wrapper = styled.div`
     width: 16.7%;
@@ -33,9 +36,10 @@ const Img = styled.img.attrs(({src}) => ({
 type PropsType = {
 }
 
-const Forecast: React.FC<PropsType> = ({}) => {
+const Forecast: React.FC<PropsType> = () => {
+
     return <Wrapper>
-        <TextWrapper>18:23</TextWrapper>
+        <TextWrapper><div>27.10.2012</div><div>18:23</div></TextWrapper>
         <ImgWrapper>
             <div>70%</div>
             <Img src={rainy}/>
