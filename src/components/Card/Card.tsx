@@ -5,13 +5,13 @@ import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
 import rainy from '../../assets/rainy.png';
 import Dialog from '@mui/material/Dialog';
 
-import Forecast from './SliderForecast/Forecast/Forecast';
+import Forecast from './Forecast/Forecast';
 import SliderForecast from './SliderForecast/SliderForecast';
 import Weather from './Weather/Weather';
 import Temperature from './Temperature/Temperature';
 import { weatherAPI } from '../../api/api';
 import { AppStateType } from '../../redux/redux-store';
-import { ForecastType } from '../../types/types';
+import { ForecastType, ListType } from '../../types/types';
 
 const CardWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -73,11 +73,11 @@ const Card: React.FC<PropsType> = () => {
 
   const [data, setData] = useState<ForecastType>();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [activeForecast, setActiveForecast] = useState<ForecastType>();
+  const [activeForecast, setActiveForecast] = useState<ListType>();
 
-  const handleOpenDialog = (forecast: ForecastType) => {
+  const handleOpenDialog = (item: ListType) => {
     setIsDialogOpen(true);
-    setActiveForecast(forecast);
+    setActiveForecast(item);
   };
 
   useEffect(() => {
@@ -93,8 +93,8 @@ const Card: React.FC<PropsType> = () => {
     dispatch(setForecast('Moscow'));
   }, [dispatch]);
 
-  console.log(data);
-  console.log(forecast);
+  // console.log(data);
+  // console.log(forecast);
 
   if (!forecast) {
     return <div></div>;
@@ -112,17 +112,7 @@ const Card: React.FC<PropsType> = () => {
         </UpperSection>
         <SliderForecast {...SliderProps}>
           {forecast.list.map((item, index) => {
-            return <div key={index} onClick={() => handleOpenDialog(forecast)}>
-              <TextWrapper>
-                <div>27.10.2012</div>
-                <div>18:23</div>
-              </TextWrapper>
-              <ImgWrapper>
-                <div>70%</div>
-                <Img src={rainy}/>
-              </ImgWrapper>
-              <TextWrapper>27°C</TextWrapper>
-            </div>;
+            return <Forecast key={item.dt} handleOpenDialog={() => handleOpenDialog(item)} item={item} index={index}/>
           })}
         </SliderForecast>
       </CardWrapper>

@@ -38,7 +38,6 @@ const SliderForecast: React.FC<SliderProps> = ({
   // Pages start at 0, therefore -1 at the end here
   const totalPages: number = Math.ceil(children.length / visibleSlides) - 1;
 
-  console.log(children);
   useEffect(() => {
     //@ts-ignore
     const resizeObserver = new ResizeObserver(entries => {

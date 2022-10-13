@@ -66,7 +66,7 @@ export type ForecastType = {
   sunset: number,
 };
 
-type ListType = {
+export type ListType = {
   dt: number;
   main: MainListType;
   weather: Array<WeatherDescType>;
