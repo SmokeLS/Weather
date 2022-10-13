@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import rainy from '../../../assets/rainy.png';
-import { setForecast } from '../../../redux/app-reducer';
-import { AppStateType } from '../../../redux/redux-store';
+import { setForecast } from '../../../../redux/app-reducer';
+import { AppStateType } from '../../../../redux/redux-store';
 
 const Wrapper = styled.div`
     width: 16.7%;
