@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
-import rainy from '../../assets/rainy.png';
+import rainy from '../../assets/rainy-day.png';
 import Dialog from '@mui/material/Dialog';
 
 import Forecast from './Forecast/Forecast';

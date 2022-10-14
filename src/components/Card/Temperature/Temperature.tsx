@@ -27,6 +27,14 @@ const Temperature: React.FC<PropsType> = () => {
   const dispatch = useDispatch();
   const currentWeather = useSelector((state: AppStateType) => state.app.currentWeather);
 
+  const weatherDate = new Date();
+  
+  const zeroDate = weatherDate.getDate() < 10 ? `0${weatherDate.getDate()}` : weatherDate.getDate();
+  const zeroMonth = weatherDate.getMonth() + 1 < 10 ? `0${weatherDate.getMonth()}` : weatherDate.getMonth();
+
+  console.log(zeroDate);
+  const weatherDateFormat = `${zeroDate}/${weatherDate.getMonth()+1}`
+
   useEffect(() => {
     dispatch(setCurrentWeather('Moscow'));
   }, [dispatch]);
@@ -40,7 +48,7 @@ const Temperature: React.FC<PropsType> = () => {
   return (
     <Wrapper>
       <TextTemperatureWrapper>{celsiusTemp}°C</TextTemperatureWrapper>
-      <TextDateWrapper>05/18 Четверг</TextDateWrapper>
+      <TextDateWrapper>{weatherDateFormat}</TextDateWrapper>
     </Wrapper>
   );
 };

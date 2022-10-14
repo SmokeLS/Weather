@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import rainy from '../../../assets/rainy.png';
+import rainy from '../../../assets/rainy-day.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { WeatherType } from '../../../types/types';
 import { AppStateType } from '../../../redux/redux-store';
 import { setCurrentWeather } from '../../../redux/app-reducer';
+import ExchangePicture from '../../../common/ExchangePicture/ExchangePicture';
 
 const Wrapper = styled.div`
   width: 50%;
@@ -44,7 +45,7 @@ const Weather: React.FC<PropsType> = ({}) => {
 
   return (
     <Wrapper>
-      <Img src={rainy} />
+      <Img src={ExchangePicture(currentWeather.weather[0].icon)} />
       <TextWrapper>
         <div>{currentWeather.name}</div>
         <div>Давление: {colPressure} мм.</div>
