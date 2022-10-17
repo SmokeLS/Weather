@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { WeatherType } from '../../../types/types';
 import { AppStateType } from '../../../redux/redux-store';
 import { setCurrentWeather } from '../../../redux/app-reducer';
-import ExchangePicture from '../../../common/ExchangePicture/ExchangePicture';
+import ExchangePicture from '../../../common/exchangePicture/exchangePicture';
+import { colPressure } from '../../../common/convert';
 
 const Wrapper = styled.div`
   width: 50%;
@@ -41,14 +42,12 @@ const Weather: React.FC<PropsType> = ({}) => {
     return <div></div>;
   }
 
-  const colPressure = Math.round(currentWeather?.main.pressure * 0.750064);
-
   return (
     <Wrapper>
       <Img src={ExchangePicture(currentWeather.weather[0].icon)} />
       <TextWrapper>
         <div>{currentWeather.name}</div>
-        <div>Давление: {colPressure} мм.</div>
+        <div>Давление: {colPressure(currentWeather.main.pressure)} мм.</div>
         <div>Влажность: {currentWeather.main.humidity}%</div>
       </TextWrapper>
     </Wrapper>

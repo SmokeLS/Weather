@@ -11,7 +11,7 @@ import cloudyNight from '../../assets/cloudy-night.png';
 import cloud from '../../assets/cloud.png';
 import brokenClouds from '../../assets/broken-clouds.png';
 
-const ExchangePicture = (name: string) => {
+const exchangePicture = (name: string) => {
   switch (name) {
     case '01d': {
       return sun;
@@ -70,4 +70,4 @@ const ExchangePicture = (name: string) => {
   }
 };
 
-export default ExchangePicture;
+export default exchangePicture;

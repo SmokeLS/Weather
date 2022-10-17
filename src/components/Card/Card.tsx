@@ -12,6 +12,7 @@ import Temperature from './Temperature/Temperature';
 import { weatherAPI } from '../../api/api';
 import { AppStateType } from '../../redux/redux-store';
 import { ForecastType, ListType } from '../../types/types';
+import CardDialog from './CardDialog/CardDialog';
 
 const CardWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -73,7 +74,7 @@ const Card: React.FC<PropsType> = () => {
 
   const [data, setData] = useState<ForecastType>();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [activeForecast, setActiveForecast] = useState<ListType>();
+  const [activeForecast, setActiveForecast] = useState<ListType>({} as ListType);
 
   const handleOpenDialog = (item: ListType) => {
     setIsDialogOpen(true);
@@ -103,7 +104,7 @@ const Card: React.FC<PropsType> = () => {
   return (
     <>
       <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
-        <div>content</div>
+        <CardDialog activeForecast={activeForecast}/>
       </Dialog>
       <CardWrapper>
         <UpperSection>

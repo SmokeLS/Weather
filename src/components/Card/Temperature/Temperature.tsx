@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { setCurrentWeather } from '../../../redux/app-reducer';
 import { AppStateType } from '../../../redux/redux-store';
 import { useDispatch, useSelector } from 'react-redux';
+import { daysRu } from '../../../common/dates';
+import { toCelsius } from '../../../common/convert';
 
 const Wrapper = styled.div`
   width: 50%;
@@ -30,10 +32,9 @@ const Temperature: React.FC<PropsType> = () => {
   const weatherDate = new Date();
   
   const zeroDate = weatherDate.getDate() < 10 ? `0${weatherDate.getDate()}` : weatherDate.getDate();
-  const zeroMonth = weatherDate.getMonth() + 1 < 10 ? `0${weatherDate.getMonth()}` : weatherDate.getMonth();
+  const zeroMonth = weatherDate.getMonth() + 1 < 10 ? `0${weatherDate.getMonth()+1}` : weatherDate.getMonth()+1;
 
-  console.log(zeroDate);
-  const weatherDateFormat = `${zeroDate}/${weatherDate.getMonth()+1}`
+  const weatherDateFormat = `${zeroDate}/${zeroMonth}`
 
   useEffect(() => {
     dispatch(setCurrentWeather('Moscow'));
@@ -43,12 +44,10 @@ const Temperature: React.FC<PropsType> = () => {
     return <div></div>;
   }
 
-  const celsiusTemp = Math.round(currentWeather.main.temp - 273.15);
-
   return (
     <Wrapper>
-      <TextTemperatureWrapper>{celsiusTemp}°C</TextTemperatureWrapper>
-      <TextDateWrapper>{weatherDateFormat}</TextDateWrapper>
+      <TextTemperatureWrapper>{toCelsius(currentWeather.main.temp)}°C</TextTemperatureWrapper>
+      <TextDateWrapper>{weatherDateFormat} {daysRu[weatherDate.getDay()]}</TextDateWrapper>
     </Wrapper>
   );
 };

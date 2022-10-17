@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import rainy from '../../../assets/rainy-day.png';
-import ExchangePicture from '../../../common/ExchangePicture/ExchangePicture';
+import { toCelsius } from '../../../common/convert';
+import exchangePicture from '../../../common/exchangePicture/exchangePicture';
 import { setForecast } from '../../../redux/app-reducer';
 import { AppStateType } from '../../../redux/redux-store';
 import { ListType } from '../../../types/types';
@@ -37,21 +38,17 @@ const Forecast: React.FC<PropsType> = ({ item, index, handleOpenDialog }) => {
   const dateYYYYMMDD = item.dt_txt.split(' ')[0];
   const dateHHMM = `${item.dt_txt.split(' ')[1].split(':')[0]}:${item.dt_txt.split(' ')[1].split(':')[1]}`;
 
-  const celsiusTemp = Math.round(item.main.temp - 273.15);
-
-  console.log(item);
-
   return (
-    <div onClick={handleOpenDialog}>
+    <div onClick={handleOpenDialog} key={index}>
       <TextWrapper>
         <div>{dateYYYYMMDD}</div>
         <div>{dateHHMM}</div>
       </TextWrapper>
       <ImgWrapper>
         <div>{item.main.humidity}%</div>
-        <Img src={ExchangePicture(item.weather[0].icon)} />
+        <Img src={exchangePicture(item.weather[0].icon)} />
       </ImgWrapper>
-      <TextWrapper>{celsiusTemp}°C</TextWrapper>
+      <TextWrapper>{toCelsius(item.main.temp)}°C</TextWrapper>
     </div>
   );
 };
