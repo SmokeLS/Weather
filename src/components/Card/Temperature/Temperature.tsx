@@ -4,7 +4,7 @@ import { setCurrentWeather } from '../../../redux/app-reducer';
 import { AppStateType } from '../../../redux/redux-store';
 import { useDispatch, useSelector } from 'react-redux';
 import { daysRu } from '../../../common/dates';
-import { toCelsius } from '../../../common/convert';
+import { toCelsius, toFahrenheit } from '../../../common/convert';
 
 const Wrapper = styled.div`
   width: 50%;

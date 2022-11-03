@@ -13,6 +13,9 @@ import { weatherAPI } from '../../api/api';
 import { AppStateType } from '../../redux/redux-store';
 import { ForecastType, ListType } from '../../types/types';
 import CardDialog from './CardDialog/CardDialog';
+import Switcher from '../../common/Switcher/Switcher';
+
+const Container = styled.div``;
 
 const CardWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -26,6 +29,7 @@ const CardWrapper = styled.div`
 
 const UpperSection = styled.div`
   display: flex;
+  position: relative;
   height: 40%;
   border-bottom: 4px solid rgba(60, 60, 60, 0.4);
   flex-direction: row;
@@ -104,16 +108,17 @@ const Card: React.FC<PropsType> = () => {
   return (
     <>
       <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
-        <CardDialog activeForecast={activeForecast}/>
+        <CardDialog activeForecast={activeForecast} />
       </Dialog>
       <CardWrapper>
         <UpperSection>
+          <Switcher />
           <Weather />
           <Temperature />
         </UpperSection>
         <SliderForecast {...SliderProps}>
           {forecast.list.map((item, index) => {
-            return <Forecast key={item.dt} handleOpenDialog={() => handleOpenDialog(item)} item={item} index={index}/>
+            return <Forecast key={item.dt} handleOpenDialog={() => handleOpenDialog(item)} item={item} index={index} />;
           })}
         </SliderForecast>
       </CardWrapper>

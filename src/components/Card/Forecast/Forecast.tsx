@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import styled from 'styled-components';
 import rainy from '../../../assets/rainy-day.png';
-import { toCelsius } from '../../../common/convert';
+import { toCelsius, toFahrenheit } from '../../../common/convert';
 import exchangePicture from '../../../common/exchangePicture/exchangePicture';
 import { setForecast } from '../../../redux/app-reducer';
 import { AppStateType } from '../../../redux/redux-store';
