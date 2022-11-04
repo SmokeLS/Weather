@@ -6,12 +6,14 @@ import { Dispatch } from 'react';
 
 const SET_CURRENT_WEATHER = 'app/SET_CURRENT_WEATHER';
 const SET_FORECAST = 'app/SET_FORECAST';
+const SET_TEMPUNIT = 'app/SET_TEMPUNIT';
 
 export type InitialStateType = typeof initialState;
  
 const initialState = {
     currentWeather: null as WeatherType | null,
     forecast: null as ForecastType | null,
+    tempUnit: "°C" as "°C" | "°F",
 };
 
 type DispatchType = Dispatch<ActionsType<typeof actions>>;
@@ -30,6 +32,12 @@ const appReducer = (state = initialState, action: ActionsType<typeof actions>): 
         forecast: action.forecast,
       };
     }
+    case SET_TEMPUNIT: {
+      return {
+        ...state,
+        tempUnit: action.tempUnit,
+      };
+    }
     default:
       return state;
   }
@@ -38,6 +46,7 @@ const appReducer = (state = initialState, action: ActionsType<typeof actions>): 
 export const actions = {
   setCurrentWeather: (currentWeather: WeatherType) => ({ type: SET_CURRENT_WEATHER, currentWeather } as const),
   setForecast: (forecast: ForecastType) => ({type: SET_FORECAST, forecast} as const),
+  setTempUnit: (tempUnit: "°C" | "°F") => ({type: SET_TEMPUNIT, tempUnit} as const),
 };
 
 export const setCurrentWeather = (city: string) : ThunkAction<AppStateType, ActionsType<typeof actions>, typeof weatherAPI, void> => thunk(async (dispatch: DispatchType) => {

@@ -1,7 +1,9 @@
 import { Card, CardContent, CardMedia, makeStyles, Typography } from '@mui/material';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { colPressure, toCelsius, toFahrenheit } from '../../../common/convert';
 import { months } from '../../../common/dates';
+import { AppStateType } from '../../../redux/redux-store';
 import { ListType } from '../../../types/types';
 
 type Props = {
@@ -11,6 +13,10 @@ type Props = {
 const CardDialog: React.FC<Props> = ({activeForecast}) => {
   const stringMonth = activeForecast.dt_txt.toString().slice(5,7);
   const stringDay = activeForecast.dt_txt.toString().slice(8,10);
+
+  const tempUnit = useSelector((state: AppStateType) => state.app.tempUnit);
+  const convertedTemp = tempUnit === "°C" ? `${toCelsius(activeForecast.main.temp)}°C` : `${toFahrenheit(activeForecast.main.temp)}°F`;
+  const convertedFeelsLike = tempUnit === "°C" ? `${toCelsius(activeForecast.main.feels_like)}°C` : `${toFahrenheit(activeForecast.main.feels_like)}°F`;
   
   return (
     <Card style={{width: 350}} className={'root'}>
@@ -19,9 +25,9 @@ const CardDialog: React.FC<Props> = ({activeForecast}) => {
           Дата: {stringDay} {months[+stringMonth-1]} {activeForecast.dt_txt.slice(11, 16)}
         </Typography>
         <Typography gutterBottom color='textSecondary'>
-          Температура: {toCelsius(activeForecast.main.temp)}°C
+          Температура: {convertedTemp}
           <br />
-          Ощущается как: {toCelsius(activeForecast.main.feels_like)}°C
+          Ощущается как: {convertedFeelsLike}
           <br />
           Давление: {colPressure(activeForecast.main.pressure)}мм. рт. ст.
           <br />
@@ -32,18 +38,6 @@ const CardDialog: React.FC<Props> = ({activeForecast}) => {
           Атмосферная видимость: {activeForecast.visibility}м.
           <br />
         </Typography>
-        {/* {character.alias.map((alias: any) => (
-          <Chip key={alias} style={{ margin: 3 }} size='small' label={alias} />
-        ))}
-        <Typography color='textSecondary'>Abilities:</Typography>
-        {character.abilities.map((ability: any) => (
-          <Chip
-            key={ability}
-            style={{ margin: 3 }}
-            size='small'
-            label={ability}
-          />
-        ))} */}
       </CardContent>
     </Card>
   );

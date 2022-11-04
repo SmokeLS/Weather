@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import rainy from '../../../assets/rainy-day.png';
 import { toCelsius, toFahrenheit } from '../../../common/convert';
@@ -37,6 +38,9 @@ const Forecast: React.FC<PropsType> = ({ item, index, handleOpenDialog }) => {
   const dateYYYYMMDD = item.dt_txt.split(' ')[0];
   const dateHHMM = `${item.dt_txt.split(' ')[1].split(':')[0]}:${item.dt_txt.split(' ')[1].split(':')[1]}`;
 
+  const tempUnit = useSelector((state: AppStateType) => state.app.tempUnit);
+  const convertedTemp = tempUnit === "°C" ? `${toCelsius(item.main.temp)}°C` : `${toFahrenheit(item.main.temp)}°F`;
+
   return (
     <div onClick={handleOpenDialog} key={index}>
       <TextWrapper>
@@ -47,7 +51,7 @@ const Forecast: React.FC<PropsType> = ({ item, index, handleOpenDialog }) => {
         <div>{item.main.humidity}%</div>
         <Img src={exchangePicture(item.weather[0].icon)} />
       </ImgWrapper>
-      <TextWrapper>{toCelsius(item.main.temp)}°C</TextWrapper>
+      <TextWrapper>{convertedTemp}</TextWrapper>
     </div>
   );
 };

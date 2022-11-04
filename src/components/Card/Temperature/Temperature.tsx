@@ -28,25 +28,29 @@ type PropsType = {};
 const Temperature: React.FC<PropsType> = () => {
   const dispatch = useDispatch();
   const currentWeather = useSelector((state: AppStateType) => state.app.currentWeather);
-
+  const tempUnit = useSelector((state: AppStateType) => state.app.tempUnit);
+  
   const weatherDate = new Date();
+  
   
   const zeroDate = weatherDate.getDate() < 10 ? `0${weatherDate.getDate()}` : weatherDate.getDate();
   const zeroMonth = weatherDate.getMonth() + 1 < 10 ? `0${weatherDate.getMonth()+1}` : weatherDate.getMonth()+1;
-
+  
   const weatherDateFormat = `${zeroDate}/${zeroMonth}`
-
+  
   useEffect(() => {
     dispatch(setCurrentWeather('Moscow'));
   }, [dispatch]);
-
+  
   if (!currentWeather) {
     return <div></div>;
   }
-
+  
+  const convertedTemp = tempUnit === "°C" ? `${toCelsius(currentWeather.main.temp)}°C` : `${toFahrenheit(currentWeather.main.temp)}°F`;
+  
   return (
     <Wrapper>
-      <TextTemperatureWrapper>{toCelsius(currentWeather.main.temp)}°C</TextTemperatureWrapper>
+      <TextTemperatureWrapper>{convertedTemp}</TextTemperatureWrapper>
       <TextDateWrapper>{weatherDateFormat} {daysRu[weatherDate.getDay()]}</TextDateWrapper>
     </Wrapper>
   );

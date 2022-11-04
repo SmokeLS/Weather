@@ -16,6 +16,7 @@ const ImgWrapper = styled.div`
 function App() {
   return (
     <ImgWrapper className='Application'>
+      {/* <Panel /> */}
       <Card />
     </ImgWrapper>
   );

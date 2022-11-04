@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
-import rainy from '../../assets/rainy-day.png';
+import { setForecast } from '../../redux/app-reducer';
 import Dialog from '@mui/material/Dialog';
 
 import Forecast from './Forecast/Forecast';
@@ -14,8 +13,6 @@ import { AppStateType } from '../../redux/redux-store';
 import { ForecastType, ListType } from '../../types/types';
 import CardDialog from './CardDialog/CardDialog';
 import Switcher from '../../common/Switcher/Switcher';
-
-const Container = styled.div``;
 
 const CardWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -33,34 +30,6 @@ const UpperSection = styled.div`
   height: 40%;
   border-bottom: 4px solid rgba(60, 60, 60, 0.4);
   flex-direction: row;
-`;
-
-const Wrapper = styled.div`
-  width: 16.7%;
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  color: #fff;
-  text-align: center;
-`;
-
-const TextWrapper = styled.div`
-  font-size: 32px;
-`;
-
-const ImgWrapper = styled.div`
-  font-size: 24px;
-  color: #81fcfc;
-  text-align: center;
-`;
-
-const Img = styled.img.attrs(({ src }) => ({
-  alt: 'rainy',
-  src,
-}))`
-  width: 100px;
 `;
 
 const SliderProps = {
@@ -97,9 +66,6 @@ const Card: React.FC<PropsType> = () => {
   useEffect(() => {
     dispatch(setForecast('Moscow'));
   }, [dispatch]);
-
-  // console.log(data);
-  // console.log(forecast);
 
   if (!forecast) {
     return <div></div>;
