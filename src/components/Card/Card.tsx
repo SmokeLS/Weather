@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { setForecast } from '../../redux/app-reducer';
+import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
 import Dialog from '@mui/material/Dialog';
 
 import Forecast from './Forecast/Forecast';
@@ -16,7 +16,7 @@ import Switcher from '../../common/Switcher/Switcher';
 
 const CardWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
-  height: 600px;
+  height: 570px;
   width: 80%;
   border-radius: 15px;
   padding: 25px;
@@ -55,17 +55,9 @@ const Card: React.FC<PropsType> = () => {
   };
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await weatherAPI.getForecast('Moscow');
-      setData(data);
-    };
-
-    getData();
+    dispatch(setCurrentWeather('Москва'))
+    dispatch(setForecast('Москва'));
   }, []);
-
-  useEffect(() => {
-    dispatch(setForecast('Moscow'));
-  }, [dispatch]);
 
   if (!forecast) {
     return <div></div>;
