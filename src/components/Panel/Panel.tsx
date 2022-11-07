@@ -22,7 +22,6 @@ const Container = styled.div`
 `;
 
 const Search = styled.div`
-
   display: flex;
   justify-content: center;
 `;
@@ -36,26 +35,33 @@ export const Panel = () => {
   const [city, setCity] = React.useState<string>('');
   const dispatch = useDispatch();
 
-  const InputHandler = (e :  React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const InputHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setCity(e.target.value);
   };
 
   const SearchHandler = () => {
-    dispatch(setCurrentWeather(city))
+    dispatch(setCurrentWeather(city));
     dispatch(setForecast(city));
+  };
+
+  const SearchKeyHandler = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (e.code === 'Enter') {
+      dispatch(setCurrentWeather(city));
+      dispatch(setForecast(city));
+    }
   };
 
   const inputStyle = {
     background: '#fff',
     borderRadius: '5px',
     width: 260,
-    padding: "0 5px"
-  }
+    padding: '0 5px',
+  };
 
   const toolbarStyle = {
     width: '80%',
     margin: '0 auto',
-  }
+  };
 
   const searchStyle = {
     width: 230,
@@ -63,7 +69,7 @@ export const Panel = () => {
     justifyContent: 'space-around',
     alignItems: 'center',
     marginLeft: 30,
-  }
+  };
 
   return (
     <Container>
@@ -73,7 +79,13 @@ export const Panel = () => {
             Weather app
           </Typography>
           <Search style={searchStyle}>
-            <InputBase placeholder="Введите название города" onChange={(e) => InputHandler(e)} style={inputStyle} inputProps={{ 'aria-label': 'search' }} />
+            <InputBase
+              placeholder="Введите название города"
+              onKeyDown={(e) => SearchKeyHandler(e)}
+              onChange={(e) => InputHandler(e)}
+              style={inputStyle}
+              inputProps={{ 'aria-label': 'search' }}
+            />
             <SearchIconContainer onClick={SearchHandler}>
               <SearchIcon />
             </SearchIconContainer>

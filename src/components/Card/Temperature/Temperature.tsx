@@ -41,12 +41,6 @@ const Temperature: React.FC<PropsType> = () => {
     dispatch(setCurrentWeather('Москва'));
   }, []);
 
-  // useEffect(() => {
-  //   if (currentWeather) {
-  //     dispatch(setCurrentWeather(currentWeather.name));
-  //   }
-  // }, [currentWeather, dispatch]);
-
   if (!currentWeather) {
     return <div></div>;
   }
