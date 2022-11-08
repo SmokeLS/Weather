@@ -44,7 +44,7 @@ const Forecast: React.FC<PropsType> = ({ item, index, handleOpenDialog }) => {
   return (
     <div onClick={handleOpenDialog} key={index}>
       <TextWrapper>
-        <div>{dateYYYYMMDD}</div>
+        <div style={{'whiteSpace': 'pre-wrap'}}>{dateYYYYMMDD}</div>
         <div>{dateHHMM}</div>
       </TextWrapper>
       <ImgWrapper>

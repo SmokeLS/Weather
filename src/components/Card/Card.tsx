@@ -35,7 +35,7 @@ const UpperSection = styled.div`
 const SliderProps = {
   zoomFactor: 5,
   slideMargin: 50,
-  maxVisibleSlides: 2,
+  maxVisibleSlides: 5,
   pageTransition: 500,
 };
 

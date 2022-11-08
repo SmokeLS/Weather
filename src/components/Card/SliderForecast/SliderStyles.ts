@@ -20,10 +20,10 @@ export const StyledSliderWrapper = styled.div<SliderWrapperProps>`
   position: relative;
   color: #fff;
   text-align: center;
-  padding: ${(props) => (props.zoomFactor / props.visibleSlides) * 0.7 + '%'} 0;
+  padding: ${(props) => (props.zoomFactor / props.visibleSlides) * 0.4 + '%'} 0;
   .button-wrapper {
     position: absolute;
-    width: 55px;
+    width: 45px;
     height: 100%;
     top: 0;
     padding: ${(props) => props.zoomFactor / 7 + '%'} 0;
@@ -59,7 +59,7 @@ export const StyledSliderWrapper = styled.div<SliderWrapperProps>`
 
 export const StyledSlider = styled.div<SliderProps>`
   display: flex;
-  padding: 0 55px;
+  padding: 0 50px;
   transition: transform ${(props) => props.pageTransition}ms ease;
   :hover ${StyledSliderItem} {
     transform: translateX(${(props) => props.transformValue});
