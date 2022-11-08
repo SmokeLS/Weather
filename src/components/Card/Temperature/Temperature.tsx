@@ -5,9 +5,18 @@ import { AppStateType } from '../../../redux/redux-store';
 import { useDispatch, useSelector } from 'react-redux';
 import { daysRu } from '../../../common/dates';
 import { toCelsius, toFahrenheit } from '../../../common/convert';
+import { useMediaQuery } from '@mui/material';
 
 const Wrapper = styled.div`
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+`;
+
+const WrapperMobile = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,6 +38,7 @@ const Temperature: React.FC<PropsType> = () => {
   const dispatch = useDispatch();
   const currentWeather = useSelector((state: AppStateType) => state.app.currentWeather);
   const tempUnit = useSelector((state: AppStateType) => state.app.tempUnit);
+  const isMobile = useMediaQuery('(min-width:769px)');
 
   const weatherDate = new Date();
 
@@ -39,7 +49,7 @@ const Temperature: React.FC<PropsType> = () => {
 
   useEffect(() => {
     dispatch(setCurrentWeather('Москва'));
-  }, []);
+  }, [dispatch]);
 
   if (!currentWeather) {
     return <div></div>;
@@ -48,13 +58,14 @@ const Temperature: React.FC<PropsType> = () => {
   const convertedTemp =
     tempUnit === '°C' ? `${toCelsius(currentWeather.main.temp)}°C` : `${toFahrenheit(currentWeather.main.temp)}°F`;
 
+  const Wrap = isMobile ? Wrapper : WrapperMobile;
   return (
-    <Wrapper>
+    <Wrap>
       <TextTemperatureWrapper>{convertedTemp}</TextTemperatureWrapper>
       <TextDateWrapper>
         {weatherDateFormat} {daysRu[weatherDate.getDay()]}
       </TextDateWrapper>
-    </Wrapper>
+    </Wrap>
   );
 };
 

@@ -4,13 +4,18 @@ import rain from '../assets/rain.jpg';
 import Card from '../components/Card/Card';
 import Panel from '../components/Panel/Panel';
 import ErrorBoundary from '../common/ErrorBoundary/ErrorBoundary';
-import MediaQuery from 'react-responsive';
 
-const ImgWrapper = styled.div`
+const ImgBackground = styled.div`
   background-image: url(${rain});
-  width: 100%;
   background-size: cover;
   height: 100vh;
+  width: 100%;
+  z-index: -1;
+  position: fixed;
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
 `;
 
 const MainPage = styled.div`
@@ -19,42 +24,18 @@ const MainPage = styled.div`
   align-items: center;
 `;
 
-const ImgWrapperMobile = styled.div`
-  background-image: url(${rain});
-  width: 100%;
-  background-size: cover;
-  height: 100vh;
-`;
-
-const MainPageMobile = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 function App() {
   return (
     <>
-      <MediaQuery minWidth={768}>
-        <ImgWrapper className="Application">
-          <Panel />
-          <MainPage>
-            <ErrorBoundary>
-              <Card />
-            </ErrorBoundary>
-          </MainPage>
-        </ImgWrapper>
-      </MediaQuery>
-      <MediaQuery maxWidth={768}>
-        <ImgWrapper>
+      <ImgBackground />
+      <Wrapper className="Application">
         <Panel />
-          <MainPageMobile>
-            <ErrorBoundary>
-              <Card />
-            </ErrorBoundary>
-          </MainPageMobile>
-        </ImgWrapper>
-      </MediaQuery>
+        <MainPage>
+          <ErrorBoundary>
+            <Card />
+          </ErrorBoundary>
+        </MainPage>
+      </Wrapper>
     </>
   );
 }
