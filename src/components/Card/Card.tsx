@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
+import MediaQuery from 'react-responsive';
 import Dialog from '@mui/material/Dialog';
 
+import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
 import Forecast from './Forecast/Forecast';
 import SliderForecast from './SliderForecast/SliderForecast';
 import Weather from './Weather/Weather';
@@ -32,10 +33,18 @@ const UpperSection = styled.div`
   flex-direction: row;
 `;
 
+const UpperSectionMobile = styled.div`
+  display: flex;
+  position: relative;
+  height: 40%;
+  border-bottom: 4px solid rgba(60, 60, 60, 0.4);
+  flex-direction: column;
+`;
+
 const SliderProps = {
   zoomFactor: 5,
   slideMargin: 50,
-  maxVisibleSlides: 5,
+  maxVisibleSlides: 4,
   pageTransition: 500,
 };
 
@@ -55,7 +64,7 @@ const Card: React.FC<PropsType> = () => {
   };
 
   useEffect(() => {
-    dispatch(setCurrentWeather('Москва'))
+    dispatch(setCurrentWeather('Москва'));
     dispatch(setForecast('Москва'));
   }, []);
 
@@ -74,6 +83,7 @@ const Card: React.FC<PropsType> = () => {
           <Weather />
           <Temperature />
         </UpperSection>
+
         <SliderForecast {...SliderProps}>
           {forecast.list.map((item, index) => {
             return <Forecast key={item.dt} handleOpenDialog={() => handleOpenDialog(item)} item={item} index={index} />;

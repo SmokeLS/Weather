@@ -47,7 +47,7 @@ const Weather: React.FC<PropsType> = ({}) => {
       <Img src={ExchangePicture(currentWeather.weather[0].icon)} />
       <TextWrapper>
         <div>{currentWeather.name}</div>
-        <div>Давление: {colPressure(currentWeather.main.pressure)} мм.</div>
+        <div>Давление: <span style={{"whiteSpace" : "nowrap"}}>{colPressure(currentWeather.main.pressure)} мм.</span></div>
         <div>Влажность: {currentWeather.main.humidity}%</div>
       </TextWrapper>
     </Wrapper>
