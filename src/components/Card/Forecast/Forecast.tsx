@@ -21,8 +21,8 @@ const ImgWrapper = styled.div`
   }
 `;
 
-const Img = styled.img.attrs(({ src }) => ({
-  alt: 'rainy',
+const Img = styled.img.attrs(({ src, alt}) => ({
+  alt,
   src,
 }))`
   width: 100px;
@@ -49,7 +49,7 @@ const Forecast: React.FC<PropsType> = ({ item, index, handleOpenDialog }) => {
       </TextWrapper>
       <ImgWrapper>
         <div>{item.main.humidity}%</div>
-        <Img src={exchangePicture(item.weather[0].icon)} />
+        <Img src={exchangePicture(item.weather[0].icon).src} alt={exchangePicture(item.weather[0].icon).alt}/>
       </ImgWrapper>
       <TextWrapper>{convertedTemp}</TextWrapper>
     </div>

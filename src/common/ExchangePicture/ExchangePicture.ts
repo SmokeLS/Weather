@@ -11,61 +11,64 @@ import cloudyNight from '../../assets/cloudy-night.png';
 import cloud from '../../assets/cloud.png';
 import brokenClouds from '../../assets/broken-clouds.png';
 
-const exchangePicture = (name: string) => {
+const exchangePicture : Function = (name: string) => {
   switch (name) {
     case '01d': {
-      return sun;
+      return { src: sun, alt: 'sun' };
     }
     case '02d': {
-      return cloudySun;
+      return { src: cloudySun, alt: 'cloudy sun' };
     }
     case '03d': {
-      return cloud;
+      return { src: cloud, alt: 'cloud' };
     }
     case '04d': {
-      return brokenClouds;
+      return { src: brokenClouds, alt: 'broken clouds' };
     }
     case '09d': {
-      return showerRain;
+      return { src: showerRain, alt: 'shower rain' };
     }
     case '10d': {
-      return rainyDay;
+      return { src: rainyDay, alt: 'rainy day' };
     }
     case '11d': {
-      return storm;
+      return { src: storm, alt: 'storm' };
     }
     case '13d': {
-      return snow;
+      return { src: snow, alt: 'snow' };
     }
     case '50d': {
-      return mist;
+      return { src: mist, alt: 'mist' };
     }
     case '01n': {
-      return night;
+      return { src: night, alt: 'night' };
     }
     case '02n': {
-      return cloudyNight;
+      return { src: cloudyNight, alt: 'cloudy night' };
     }
     case '03n': {
-      return cloud;
+      return { src: cloud, alt: 'cloud' };
     }
     case '04n': {
-      return brokenClouds;
+      return { src: brokenClouds, alt: 'broken clouds' };
     }
     case '09n': {
-      return showerRain;
+      return { src: showerRain, alt: 'shower rain' };
     }
     case '10n': {
-      return rainyNight;
+      return { src: rainyNight, alt: 'rainy night' };
     }
     case '11n': {
-      return storm;
+      return { src: storm, alt: 'storm' };
     }
     case '13n': {
-      return snow;
+      return { src: snow, alt: 'snow' };
     }
     case '50n': {
-      return mist;
+      return { src: mist, alt: 'mist' };
+    }
+    default: {
+      return {src: '', alt: ''}
     }
   }
 };

@@ -4,7 +4,7 @@ import MediaQuery from 'react-responsive';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/redux-store';
 import { setCurrentWeather } from '../../../redux/app-reducer';
-import ExchangePicture from '../../../common/exchangePicture/exchangePicture';
+import exchangePicture from '../../../common/exchangePicture/exchangePicture';
 import { colPressure } from '../../../common/convert';
 
 const Wrapper = styled.div`
@@ -61,21 +61,22 @@ const Weather: React.FC<PropsType> = () => {
 
   return (
     <>
-      <MediaQuery minWidth={769}>
+      <MediaQuery minWidth={768}>
         <Wrapper>
-          <Img src={ExchangePicture(currentWeather.weather[0].icon)} />
+          <Img src={exchangePicture(currentWeather.weather[0].icon).src} alt={exchangePicture(currentWeather.weather[0].icon).alt}/>
           <TextWrapper>
             <div>{currentWeather.name}</div>
             <div>
               Давление: <span style={{ whiteSpace: 'nowrap' }}>{colPressure(currentWeather.main.pressure)} мм.</span>
             </div>
             <div>Влажность: {currentWeather.main.humidity}%</div>
+            {/* <div>{currentWeather.coord.lat} {currentWeather.coord.lon}</div> */}
           </TextWrapper>
         </Wrapper>
       </MediaQuery>
-      <MediaQuery maxWidth={768}>
+      <MediaQuery maxWidth={767}>
         <WrapperMobile>
-          <ImgMobile src={ExchangePicture(currentWeather.weather[0].icon)} />
+          <ImgMobile src={exchangePicture(currentWeather.weather[0].icon).src} alt={exchangePicture(currentWeather.weather[0].icon).alt}/>
           <TextWrapper>
             <div>{currentWeather.name}</div>
             <div>

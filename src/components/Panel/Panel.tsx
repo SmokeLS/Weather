@@ -64,16 +64,20 @@ export const Panel = () => {
   };
 
   const searchStyle = {
-    width: 230,
+    width: 240,
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
     marginLeft: 30,
   };
 
+  const SearchIconStyle = {
+    marginLeft: 10
+  }
+
   return (
     <Container>
-      <AppBar position="static">
+      <AppBar position="static" color="secondary">
         <Toolbar style={toolbarStyle}>
           <Typography variant="h6" noWrap>
             Weather app
@@ -86,7 +90,7 @@ export const Panel = () => {
               style={inputStyle}
               inputProps={{ 'aria-label': 'search' }}
             />
-            <SearchIconContainer onClick={SearchHandler}>
+            <SearchIconContainer onClick={SearchHandler} style={SearchIconStyle}>
               <SearchIcon />
             </SearchIconContainer>
           </Search>

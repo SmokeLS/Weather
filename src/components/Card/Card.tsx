@@ -77,14 +77,14 @@ const Card: React.FC<PropsType> = () => {
         <CardDialog activeForecast={activeForecast} />
       </Dialog>
       <CardWrapper>
-        <MediaQuery minWidth={769}>
+        <MediaQuery minWidth={768}>
           <UpperSection>
             <Switcher />
             <Weather />
             <Temperature />
           </UpperSection>
         </MediaQuery>
-        <MediaQuery maxWidth={768}>
+        <MediaQuery maxWidth={767}>
           <UpperSectionMobile>
             <Switcher />
             <Weather />
