@@ -13,9 +13,12 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button';
+
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   margin-bottom: 20px;
@@ -34,6 +37,8 @@ const SearchIconContainer = styled.div`
 export const Panel = () => {
   const [city, setCity] = React.useState<string>('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const InputHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setCity(e.target.value);
@@ -42,6 +47,18 @@ export const Panel = () => {
   const SearchHandler = () => {
     dispatch(setCurrentWeather(city));
     dispatch(setForecast(city));
+  };
+
+  const MapHandler = () => {
+    if (location.pathname === '/map') {
+      navigate('');
+    } else {
+      navigate('/map');
+    }
+  };
+
+  const ToMainApp = () => {
+    navigate('');
   };
 
   const SearchKeyHandler = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -72,14 +89,31 @@ export const Panel = () => {
   };
 
   const SearchIconStyle = {
-    marginLeft: 10
-  }
+    cursor: 'pointer',
+    marginLeft: 10,
+  };
+
+  const ButtonPanel = () => {
+    return (
+      <>
+        {location.pathname === '/' ? (
+          <Button variant="contained" onClick={MapHandler} style={{ margin: '0 0 0 auto' }}>
+            Карта погоды
+          </Button>
+        ) : (
+          <Button variant="contained" onClick={MapHandler} style={{ margin: '0 0 0 auto' }}>
+            Виджет погоды
+          </Button>
+        )}
+      </>
+    );
+  };
 
   return (
     <Container>
       <AppBar position="static" color="secondary">
         <Toolbar style={toolbarStyle}>
-          <Typography variant="h6" noWrap>
+          <Typography onClick={ToMainApp} variant="h6" style={{ cursor: 'pointer' }} noWrap>
             Weather app
           </Typography>
           <Search style={searchStyle}>
@@ -95,6 +129,7 @@ export const Panel = () => {
             </SearchIconContainer>
           </Search>
           <div />
+          <ButtonPanel />
         </Toolbar>
       </AppBar>
     </Container>

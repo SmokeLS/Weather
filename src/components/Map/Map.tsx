@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import markerIconPng from 'leaflet/dist/images/marker-icon.png';
+import { Icon } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -26,7 +28,8 @@ const Map = () => {
   return (
     <>
       {/* @ts-ignore */}
-      <MapContainer center={position} zoom={2} style={MapContainerStyle} maxBounds={bounds}
+      <MapContainer center={position} style={MapContainerStyle} maxBounds={bounds}
+        zoom={3}
         scrollWheelZoom={true}
         attributionControl={false}
       >
@@ -36,7 +39,7 @@ const Map = () => {
           url="https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=82cd9c64b0e678fe5ce342593e19f7de"
         />
         {/* @ts-ignore */}
-        <Marker position={position}>
+        <Marker icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })} position={position}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
