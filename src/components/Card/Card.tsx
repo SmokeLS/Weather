@@ -53,7 +53,6 @@ type PropsType = {};
 const Card: React.FC<PropsType> = () => {
   const dispatch = useDispatch();
   const forecast = useSelector((state: AppStateType) => state.app.forecast);
-
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeForecast, setActiveForecast] = useState<ListType>({} as ListType);
 

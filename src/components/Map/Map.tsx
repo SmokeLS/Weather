@@ -6,6 +6,7 @@ import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import { Icon } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
+import SideMenu from './SideMenu/SideMenu';
 
 const Map = () => {
   const position = [51.505, -0.09];
@@ -38,6 +39,7 @@ const Map = () => {
           detectRetina
           url="https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=82cd9c64b0e678fe5ce342593e19f7de"
         />
+        <SideMenu />
         {/* @ts-ignore */}
         <Marker icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })} position={position}>
           <Popup>

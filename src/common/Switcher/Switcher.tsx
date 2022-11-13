@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { actions } from '../../redux/app-reducer';
@@ -15,11 +15,13 @@ const Switcher: React.FC<Props> = () => {
     (tempUnit === "°C" ? dispatch(actions.setTempUnit("°F")) : dispatch(actions.setTempUnit("°C")));
   }
 
+  const checked = tempUnit === "°F" ? true : false;
+
   return (
     <ToggleButtonCover>
       <ButtonCover>
         <Button>
-          <CheckBox type="checkbox" onChange={CheckBoxHandler}/>
+          <CheckBox type="checkbox" checked={checked} onChange={CheckBoxHandler}/>
           <Knobs />
           <Layer />
         </Button>
