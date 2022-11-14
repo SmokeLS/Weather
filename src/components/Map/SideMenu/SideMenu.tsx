@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Button from '@mui/material/Button';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
@@ -11,9 +11,12 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
 
+type PropsType = {
+  ChangeMaps: Function,
+}
 type StateType = { Temperature: boolean; Wind: boolean; Rainfall: boolean; Snow: boolean; Pressure: boolean };
 
-export default function SideMenu() {
+export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
 
@@ -37,28 +40,42 @@ export default function SideMenu() {
     setOpen(false);
   };
 
+  useEffect(() => {
+    const maps = {
+      "temp_new": checked.Temperature,
+      "wind_new": checked.Wind,
+      "rain_new": checked.Rainfall,
+      "snow_new": checked.Snow,
+      "pressure_new": checked.Pressure,
+    }
+
+    //@ts-ignore
+    ChangeMaps(Object.keys(maps).filter(item => maps[item]));
+  }, [checked]);
+
   const MenuItemTempHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN") return;
+    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
+    console.log((event.target as HTMLElement).tagName)
     setChecked(() => ({ ...checked, Temperature: !checked.Temperature }));
   };
   
   const MenuItemWindHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN") return;
+    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
     setChecked(() => ({ ...checked, Wind: !checked.Wind }));
   };
   
   const MenuItemRainHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN") return;
+    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
     setChecked(() => ({ ...checked, Rainfall: !checked.Rainfall }));
   };
 
   const MenuItemSnowHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN") return;
+    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
     setChecked(() => ({ ...checked, Snow: !checked.Snow }));
   };
 
   const MenuItemPressureHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN") return;
+    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
     setChecked(() => ({ ...checked, Pressure: !checked.Pressure }));
   };
 
@@ -143,3 +160,5 @@ export default function SideMenu() {
     </Stack>
   );
 }
+
+export default SideMenu;
