@@ -17,7 +17,7 @@ import Button from '@mui/material/Button';
 
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
+import { actions, setCurrentWeather, setForecast } from '../../redux/app-reducer';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
@@ -45,8 +45,10 @@ export const Panel = () => {
   };
 
   const SearchHandler = () => {
+    dispatch(actions.setIsLoading(true));
     dispatch(setCurrentWeather(city));
     dispatch(setForecast(city));
+    dispatch(actions.setIsLoading(false));
   };
 
   const MapHandler = () => {

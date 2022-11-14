@@ -7,14 +7,13 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
 
 type PropsType = {
   ChangeMaps: Function,
 }
-type StateType = { Temperature: boolean; Wind: boolean; Rainfall: boolean; Snow: boolean; Pressure: boolean };
+type StateType = { Temperature: boolean; Wind: boolean; Rainfall: boolean; Snow: boolean; Pressure: boolean, Clouds: boolean,Isobar: boolean};
 
 export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
   const [open, setOpen] = React.useState(false);
@@ -26,7 +25,19 @@ export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
     Rainfall: false,
     Snow: false,
     Pressure: false,
+    Clouds: false,
+    Isobar: false,
   } as StateType);
+
+  const maps = {
+    "temp_new": checked.Temperature,
+    "wind_new": checked.Wind,
+    "rain_new": checked.Rainfall,
+    "snow_new": checked.Snow,
+    "pressure_new": checked.Pressure,
+    "clouds_new": checked.Clouds,
+    "pressure_cntr": checked.Isobar,
+  }
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -41,21 +52,14 @@ export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
   };
 
   useEffect(() => {
-    const maps = {
-      "temp_new": checked.Temperature,
-      "wind_new": checked.Wind,
-      "rain_new": checked.Rainfall,
-      "snow_new": checked.Snow,
-      "pressure_new": checked.Pressure,
-    }
-
     //@ts-ignore
     ChangeMaps(Object.keys(maps).filter(item => maps[item]));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked]);
 
   const MenuItemTempHandler = (event: Event | React.SyntheticEvent) => {
     if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
-    console.log((event.target as HTMLElement).tagName)
     setChecked(() => ({ ...checked, Temperature: !checked.Temperature }));
   };
   
@@ -77,6 +81,16 @@ export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
   const MenuItemPressureHandler = (event: Event | React.SyntheticEvent) => {
     if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
     setChecked(() => ({ ...checked, Pressure: !checked.Pressure }));
+  };
+
+  const MenuItemCloudsHandler = (event: Event | React.SyntheticEvent) => {
+    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
+    setChecked(() => ({ ...checked, Clouds: !checked.Clouds }));
+  };
+
+  const MenuItemIsobarHandler = (event: Event | React.SyntheticEvent) => {
+    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
+    setChecked(() => ({ ...checked, Isobar: !checked.Isobar }));
   };
 
   function handleListKeyDown(event: React.KeyboardEvent) {
@@ -110,7 +124,7 @@ export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
           onClick={handleToggle}
           variant="contained"
         >
-          Dashboard
+          Фильтры
         </Button>
         <Popper
           open={open}
@@ -149,6 +163,12 @@ export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
                     </MenuItem>
                     <MenuItem onClick={MenuItemPressureHandler}>
                       <FormControlLabel control={<Checkbox checked={checked.Pressure}/>} label="Pressure" />
+                    </MenuItem>
+                    <MenuItem onClick={MenuItemCloudsHandler}>
+                      <FormControlLabel control={<Checkbox checked={checked.Clouds}/>} label="Clouds" />
+                    </MenuItem>
+                    <MenuItem onClick={MenuItemIsobarHandler}>
+                      <FormControlLabel control={<Checkbox checked={checked.Isobar}/>} label="Isobar" />
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>

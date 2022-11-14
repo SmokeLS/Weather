@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 import Dialog from '@mui/material/Dialog';
 
-import { setCurrentWeather, setForecast } from '../../redux/app-reducer';
+import { actions, setCurrentWeather, setForecast } from '../../redux/app-reducer';
 import Forecast from './Forecast/Forecast';
 import SliderForecast from './SliderForecast/SliderForecast';
 import Weather from './Weather/Weather';
@@ -13,6 +13,7 @@ import { AppStateType } from '../../redux/redux-store';
 import { ListType } from '../../types/types';
 import CardDialog from './CardDialog/CardDialog';
 import Switcher from '../../common/Switcher/Switcher';
+import Preloader from '../../common/Preloader/Preloader';
 
 const CardWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -61,13 +62,8 @@ const Card: React.FC<PropsType> = () => {
     setActiveForecast(item);
   };
 
-  useEffect(() => {
-    dispatch(setCurrentWeather('Москва'));
-    dispatch(setForecast('Москва'));
-  }, [dispatch]);
-
   if (!forecast) {
-    return <div></div>;
+    return <Preloader />;
   }
 
   return (

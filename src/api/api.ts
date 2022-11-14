@@ -18,6 +18,12 @@ export const weatherAPI = {
     const res = await instance.get<ForecastType>(`forecast?appid=0e2def30c3069fd2e56f866c8c70d407&q=${city}`);
     return res.data;
   },
+  // async getCities() {
+  //   const res = await instance.get<CountResponse>(
+  //     `box/city?appid=0e2def30c3069fd2e56f866c8c70d407&cnt=300&format=json&units=metric&bbox=9.003295898437502,50.28582948111451,14.095458984375002,52.81936300159786,10&callback=L.OWM.Utils.callbacks[5]`,
+  //   );
+  //   return res.data;
+  // },
   async getAirPollution(lon: number, lat: number) {
     const res = await instance.get<CountResponse>(
       `air_pollution?appid=0e2def30c3069fd2e56f866c8c70d407&lon=${lon}&lat=${lat}`,

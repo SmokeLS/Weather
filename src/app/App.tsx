@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -7,6 +7,8 @@ import Card from '../components/Card/Card';
 import Panel from '../components/Panel/Panel';
 import Map from '../components/Map/Map';
 import ErrorBoundary from '../common/ErrorBoundary/ErrorBoundary';
+import { useDispatch } from 'react-redux';
+import { actions, setCurrentWeather, setForecast } from '../redux/app-reducer';
 
 const ImgBackground = styled.div`
   background-image: url(${rain});
@@ -28,6 +30,16 @@ const MainPage = styled.div`
 `;
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(actions.setIsLoading(true));
+    dispatch(setCurrentWeather('Москва'));
+    dispatch(setForecast('Москва'));
+    dispatch(actions.setIsLoading(false));
+  }, [dispatch]);
+
   return (
     <>
       <ImgBackground />

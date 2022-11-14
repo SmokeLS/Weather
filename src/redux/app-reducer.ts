@@ -9,6 +9,7 @@ const SET_FORECAST = 'app/SET_FORECAST';
 const SET_TEMPUNIT = 'app/SET_TEMPUNIT';
 const SET_CITY = 'app/SET_CITY';
 const SET_MAPS = 'app/SET_MAPS';
+const SET_ISLOADING = 'app/SET_ISLOADING';
 
 export type InitialStateType = typeof initialState;
 
@@ -18,6 +19,7 @@ const initialState = {
   tempUnit: '°C' as '°C' | '°F',
   city: 'Moscow' as string,
   maps: [] as Array<string>,
+  isLoading: false,
 };
 
 type DispatchType = Dispatch<ActionsType<typeof actions>>;
@@ -54,6 +56,12 @@ const appReducer = (state = initialState, action: ActionsType<typeof actions>): 
         maps: action.maps,
       };
     }
+    case SET_ISLOADING: {
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
+    }
     default:
       return state;
   }
@@ -65,26 +73,23 @@ export const actions = {
   setTempUnit: (tempUnit: '°C' | '°F') => ({ type: SET_TEMPUNIT, tempUnit } as const),
   setCity: (city: string) => ({ type: SET_CITY, city } as const),
   setMaps: (maps: Array<string>) => ({ type: SET_MAPS, maps } as const),
+  setIsLoading: (isLoading: boolean) => ({type: SET_ISLOADING, isLoading} as const),
 };
 
 export const setCurrentWeather = (
   city: string,
 ): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof weatherAPI, void> =>
   thunk(async (dispatch: DispatchType) => {
-    // dispatch(actions.setIsLoading(true));
     const currentWeather = await weatherAPI.getCurrentWeather(city);
     dispatch(actions.setCurrentWeather(currentWeather));
-    // dispatch(actions.setIsLoading(false));
   });
 
 export const setForecast = (
   city: string,
 ): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof weatherAPI, void> =>
   thunk(async (dispatch: DispatchType) => {
-    // dispatch(actions.setIsLoading(true));
     const forecast = await weatherAPI.getForecast(city);
     dispatch(actions.setForecast(forecast));
-    // dispatch(actions.setIsLoading(false));
   });
 
 // export const setMaps = (maps?: string): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof mapsAPI, void> =>

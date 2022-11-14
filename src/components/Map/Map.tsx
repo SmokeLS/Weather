@@ -14,7 +14,17 @@ import { actions } from '../../redux/app-reducer';
 const Map = () => {
   const dispatch = useDispatch();
   const maps = useSelector((state: AppStateType) => state.app.maps);
-  const position = [51.505, -0.09];
+  const currentWeather = useSelector((state: AppStateType) => state.app.currentWeather);
+
+  useEffect(() => {
+    dispatch(actions.setMaps(['temp_new']));
+  }, [dispatch]);
+  
+  if (!currentWeather) return <div></div>;
+
+  console.log(currentWeather.coord.lon, currentWeather.coord.lat)
+
+  const position = [currentWeather.coord.lat, currentWeather.coord.lon];
   const bounds = [
     [
       [-90, -Infinity],
@@ -22,12 +32,8 @@ const Map = () => {
     ],
   ];
 
-  useEffect(() => {
-    dispatch(actions.setMaps(['temp_new']));
-  }, [dispatch]);
 
   const ChangeMaps = (maps: Array<string>) => {
-    console.log(maps);
     dispatch(actions.setMaps(maps))
   }
 
@@ -42,7 +48,6 @@ const Map = () => {
 
   const DisplayMaps = maps.map((item, index) => {
 
-    console.log(item);
     return (
       <TileLayer
       key={item}
@@ -56,7 +61,7 @@ const Map = () => {
     <>
       {/* @ts-ignore */}
       <MapContainer center={position} style={MapContainerStyle} maxBounds={bounds}
-        zoom={3}
+        zoom={5}
         scrollWheelZoom={true}
         attributionControl={false}
       >
