@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { actions } from '../../redux/app-reducer';
 import { AppStateType } from '../../redux/redux-store';
 import { Button, ButtonCover, CheckBox, Knobs, Layer, ToggleButtonCover } from './SwitcherStyles';

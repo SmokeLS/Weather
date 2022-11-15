@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 import Dialog from '@mui/material/Dialog';
 
-import { actions, setCurrentWeather, setForecast } from '../../redux/app-reducer';
 import Forecast from './Forecast/Forecast';
 import SliderForecast from './SliderForecast/SliderForecast';
 import Weather from './Weather/Weather';
@@ -52,7 +51,6 @@ const SliderProps = {
 type PropsType = {};
 
 const Card: React.FC<PropsType> = () => {
-  const dispatch = useDispatch();
   const forecast = useSelector((state: AppStateType) => state.app.forecast);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeForecast, setActiveForecast] = useState<ListType>({} as ListType);

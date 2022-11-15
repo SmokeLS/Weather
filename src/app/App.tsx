@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import rain from '../assets/rain.jpg';
 import Card from '../components/Card/Card';
 import Panel from '../components/Panel/Panel';

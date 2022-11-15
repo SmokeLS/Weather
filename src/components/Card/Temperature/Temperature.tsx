@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { setCurrentWeather } from '../../../redux/app-reducer';
 import { AppStateType } from '../../../redux/redux-store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { daysRu } from '../../../common/dates';
 import { toCelsius, toFahrenheit } from '../../../common/convert';
 import { useMediaQuery } from '@mui/material';
@@ -35,7 +34,6 @@ const TextDateWrapper = styled.div`
 type PropsType = {};
 
 const Temperature: React.FC<PropsType> = () => {
-  const dispatch = useDispatch();
   const currentWeather = useSelector((state: AppStateType) => state.app.currentWeather);
   const tempUnit = useSelector((state: AppStateType) => state.app.tempUnit);
   const isMobile = useMediaQuery('(min-width:769px)');
@@ -46,10 +44,6 @@ const Temperature: React.FC<PropsType> = () => {
   const zeroMonth = weatherDate.getMonth() + 1 < 10 ? `0${weatherDate.getMonth() + 1}` : weatherDate.getMonth() + 1;
 
   const weatherDateFormat = `${zeroDate}/${zeroMonth}`;
-
-  useEffect(() => {
-    dispatch(setCurrentWeather('Москва'));
-  }, [dispatch]);
 
   if (!currentWeather) {
     return <div></div>;

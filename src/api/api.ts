@@ -31,34 +31,3 @@ export const weatherAPI = {
     return res.data;
   },
 };
-
-// const instanceMaps = axios.create({
-//   baseURL: 'https://{s}.tile.openweathermap.org/',
-// });
-
-// export const mapsAPI = {
-//   async getMap(z: number = 0, x: number = 0, y: number = 0) {
-//     if (z || x || y) {
-//       const res = await instanceMaps.get<CountResponse>(`${z}/${x}/${y}.png`);
-//       return res.data;
-//     } else {
-//       const res = await instanceMaps.get<CountResponse>(`{z}/{x}/{y}.png`);
-//       console.log(res);
-//       return res.data;
-//     }
-//   },
-//   async getTempMap(z: number = 0, x: number = 0, y: number = 0) {
-//     if (z || x || y) {
-//       const res = await instanceMaps.get(
-//         `map/temp_new/${z}/${x}/${y}.png?appid=82cd9c64b0e678fe5ce342593e19f7de`,
-//       );
-//       return res.data;
-//     } else {
-//       const res = await instanceMaps.get(
-//         `map/temp_new/{z}/{x}/{y}.png?appid=82cd9c64b0e678fe5ce342593e19f7de`,
-//       );
-//       console.log(res);
-//       return res.data;
-//     }
-//   },
-// };

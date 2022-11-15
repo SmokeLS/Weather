@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/redux-store';
-import { setCurrentWeather } from '../../../redux/app-reducer';
 import exchangePicture from '../../../common/exchangePicture/exchangePicture';
 import { colPressure } from '../../../common/convert';
 
@@ -48,12 +47,7 @@ const ImgMobile = styled.img.attrs(({ src }) => ({
 type PropsType = {};
 
 const Weather: React.FC<PropsType> = () => {
-  const dispatch = useDispatch();
   const currentWeather = useSelector((state: AppStateType) => state.app.currentWeather);
-
-  useEffect(() => {
-    dispatch(setCurrentWeather('Moscow'));
-  }, [dispatch]);
 
   if (!currentWeather) {
     return <div></div>;

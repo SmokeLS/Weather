@@ -1,6 +1,3 @@
-import React, {useEffect} from 'react';
-import { Route, Routes } from 'react-router-dom';
-import styled from 'styled-components';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import { Icon } from 'leaflet';
@@ -15,14 +12,8 @@ const Map = () => {
   const dispatch = useDispatch();
   const maps = useSelector((state: AppStateType) => state.app.maps);
   const currentWeather = useSelector((state: AppStateType) => state.app.currentWeather);
-
-  useEffect(() => {
-    dispatch(actions.setMaps(['temp_new']));
-  }, [dispatch]);
   
   if (!currentWeather) return <div></div>;
-
-  console.log(currentWeather.coord.lon, currentWeather.coord.lat)
 
   const position = [currentWeather.coord.lat, currentWeather.coord.lon];
   const bounds = [
@@ -56,12 +47,14 @@ const Map = () => {
     />
     )
   });
+  
 
   return (
     <>
       {/* @ts-ignore */}
       <MapContainer center={position} style={MapContainerStyle} maxBounds={bounds}
-        zoom={5}
+        setView={position}
+        zoom={10}
         scrollWheelZoom={true}
         attributionControl={false}
       >
