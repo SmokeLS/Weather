@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 import Dialog from '@mui/material/Dialog';
+import { useMediaQuery } from '@mui/material';
 
 import Forecast from './Forecast/Forecast';
 import SliderForecast from './SliderForecast/SliderForecast';
@@ -54,6 +55,7 @@ const Card: React.FC<PropsType> = () => {
   const forecast = useSelector((state: AppStateType) => state.app.forecast);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeForecast, setActiveForecast] = useState<ListType>({} as ListType);
+  const isLowScreenMobile = useMediaQuery('(max-width:350px)');
 
   const handleOpenDialog = (item: ListType) => {
     setIsDialogOpen(true);
@@ -84,7 +86,7 @@ const Card: React.FC<PropsType> = () => {
             <Temperature />
           </UpperSectionMobile>
         </MediaQuery>
-        <SliderForecast {...SliderProps}>
+        <SliderForecast {...SliderProps} slideMargin={isLowScreenMobile ? 40: SliderProps.slideMargin}>
           {forecast.list.map((item, index) => {
             return <Forecast key={item.dt} handleOpenDialog={() => handleOpenDialog(item)} item={item} index={index} />;
           })}

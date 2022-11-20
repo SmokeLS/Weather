@@ -29,6 +29,7 @@ const TextTemperatureWrapper = styled.div`
 
 const TextDateWrapper = styled.div`
   font-size: 32px;
+  text-align: center;
 `;
 
 type PropsType = {};

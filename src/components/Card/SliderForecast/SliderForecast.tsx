@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import SliderItem from './SliderItem';
 // Styles
 import { StyledSliderWrapper, StyledSlider } from './SliderStyles';
-import styled from 'styled-components';
 // Types
 
 type SliderProps = {
@@ -18,7 +17,7 @@ const numberOfSlides = (maxVisibleSlides: number, windowWidth: number) => {
   if (windowWidth > 1200) return maxVisibleSlides;
   if (windowWidth > 745) return 4;
   if (windowWidth > 515) return 3;
-  if (windowWidth > 360) return 2;
+  if (windowWidth > 380) return 2;
   return 1;
 };
 
@@ -32,7 +31,9 @@ const SliderForecast: React.FC<SliderProps> = ({
   const [currentPage, setCurrentPage] = useState(0);
   const [transformValue, setTransformValue] = useState(`-${zoomFactor / 2}%`);
   const [scrollSize, setScrollSize] = useState(0);
-  
+
+  const [scrolling, setScrolling] = useState(0);
+
   const sliderRef = useRef<HTMLElement>(null);
 
   const visibleSlides = numberOfSlides(maxVisibleSlides, scrollSize);
@@ -91,8 +92,19 @@ const SliderForecast: React.FC<SliderProps> = ({
     return classes[index % visibleSlides] || '';
   };
 
+  const mouseDownHandler = (event: any) => {
+    setScrolling(event.clientX);
+  }
+
+  const mouseUpHandler= (event: any) => {
+    let step = event.clientX - scrolling,
+        dir: boolean = step > 0 ? false : true;
+
+    handleSlideMove(dir);
+  }
+  
   return (
-    <StyledSliderWrapper zoomFactor={zoomFactor} visibleSlides={visibleSlides}>
+    <StyledSliderWrapper zoomFactor={zoomFactor} visibleSlides={visibleSlides} slideMargin={slideMargin} onMouseDown={mouseDownHandler}>
       <StyledSlider
         visibleSlides={visibleSlides}
         transformValue={transformValue}
@@ -100,6 +112,8 @@ const SliderForecast: React.FC<SliderProps> = ({
         slideMargin={slideMargin}
         pageTransition={pageTransition}
         ref={sliderRef}
+        onMouseDown={mouseDownHandler}
+        onMouseUp={mouseUpHandler}
       >
         {children.map((child: any, i: any) => (
           <SliderItem
@@ -111,19 +125,20 @@ const SliderForecast: React.FC<SliderProps> = ({
             id={i + 1}
             callback={handleMouseOver}
             callbackOut={handleMouseOut}
+            onMouseDown={mouseDownHandler}
           >
             {child}
           </SliderItem>
         ))}
       </StyledSlider>
-      {currentPage > 0 && (
+      {currentPage > 0 && slideMargin !== 40 && (
         <div className='button-wrapper back'>
           <button className='button back' onClick={() => handleSlideMove(false)}>
             &#8249;
           </button>
         </div>
       )}
-      {currentPage !== totalPages && (
+      {currentPage !== totalPages && slideMargin !== 40 && (
         <div className='button-wrapper forward'>
           <button className='button forward' onClick={() => handleSlideMove(true)}>
             &#8250;

@@ -9,6 +9,7 @@ type SliderItemProps = {
   callback: (id: number) => void;
   callbackOut: () => void;
   slideMargin: number;
+  onMouseDown: (event: any) => void;
   visibleSlides: number;
   children: any
 };
@@ -21,6 +22,7 @@ const SliderItem: React.FC<SliderItemProps> = ({
   id,
   callback,
   callbackOut,
+  onMouseDown,
   children
 }) => (
   <StyledSliderItem
@@ -30,6 +32,7 @@ const SliderItem: React.FC<SliderItemProps> = ({
     className={slideClass}
     onMouseOver={() => callback(id)}
     onMouseOut={callbackOut}
+    onMouseDown={onMouseDown}
   >
       {children}
   </StyledSliderItem>

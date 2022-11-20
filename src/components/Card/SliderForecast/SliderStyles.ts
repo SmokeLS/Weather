@@ -4,6 +4,7 @@ import { StyledSliderItem } from './SliderItemStyles';
 type SliderWrapperProps = {
   zoomFactor: number;
   visibleSlides: number;
+  slideMargin: number;
 };
 
 type SliderProps = {
@@ -23,7 +24,7 @@ export const StyledSliderWrapper = styled.div<SliderWrapperProps>`
   padding: ${(props) => (props.zoomFactor / props.visibleSlides) * 0.4 + '%'} 0;
   .button-wrapper {
     position: absolute;
-    width: 45px;
+    width: ${(props) => props.slideMargin}px;
     height: 100%;
     top: 0;
     padding: ${(props) => props.zoomFactor / 7 + '%'} 0;
