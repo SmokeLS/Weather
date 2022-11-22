@@ -5,6 +5,10 @@ type SliderWrapperProps = {
   zoomFactor: number;
   visibleSlides: number;
   slideMargin: number;
+  onMouseDown: any;
+  onMouseUp: any;
+  onTouchStart: any;
+  onTouchEnd: any;
 };
 
 type SliderProps = {

@@ -26,13 +26,13 @@ const SliderForecast: React.FC<SliderProps> = ({
   zoomFactor,
   slideMargin,
   maxVisibleSlides,
-  pageTransition
+  pageTransition,
 }) => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [transformValue, setTransformValue] = useState(`-${zoomFactor / 2}%`);
-  const [scrollSize, setScrollSize] = useState(0);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [transformValue, setTransformValue] = useState<string>(`-${zoomFactor / 2}%`);
+  const [scrollSize, setScrollSize] = useState<number>(0);
 
-  const [scrolling, setScrolling] = useState(0);
+  const [scrolling, setScrolling] = useState<number>(0);
 
   const sliderRef = useRef<HTMLElement>(null);
 
@@ -42,7 +42,7 @@ const SliderForecast: React.FC<SliderProps> = ({
 
   useEffect(() => {
     //@ts-ignore
-    const resizeObserver = new ResizeObserver(entries => {
+    const resizeObserver = new ResizeObserver((entries) => {
       setScrollSize(entries[0].contentRect.width);
     });
     //@ts-ignore
@@ -53,9 +53,7 @@ const SliderForecast: React.FC<SliderProps> = ({
   useEffect(() => {
     if (sliderRef && sliderRef.current) {
       if (currentPage > totalPages) setCurrentPage(totalPages);
-      sliderRef.current.style.transform = `translate3D(-${
-        currentPage * scrollSize
-      }px, 0, 0)`;
+      sliderRef.current.style.transform = `translate3D(-${currentPage * scrollSize}px, 0, 0)`;
     }
   }, [sliderRef, currentPage, scrollSize, totalPages]);
 
@@ -68,14 +66,18 @@ const SliderForecast: React.FC<SliderProps> = ({
     }, pageTransition);
   };
 
-  const handleSlideMove = (forward: boolean) => {
+  const handleSlideMove = (forward: boolean | null) => {
+    if (forward === null) return;
+
     disableHoverEffect();
+
+    if (currentPage <= 0 && !forward) return;
+    if (currentPage >= totalPages && forward) return;
+
     setCurrentPage(currentPage + (forward ? 1 : -1));
 
     if (sliderRef.current)
-      sliderRef.current.style.transform = `translate3D(-${
-        (currentPage + (forward ? 1 : -1)) * scrollSize
-      }px, 0, 0)`;
+      sliderRef.current.style.transform = `translate3D(-${(currentPage + (forward ? 1 : -1)) * scrollSize}px, 0, 0)`;
   };
 
   const handleMouseOver = (id: number) => {
@@ -92,19 +94,46 @@ const SliderForecast: React.FC<SliderProps> = ({
     return classes[index % visibleSlides] || '';
   };
 
-  const mouseDownHandler = (event: any) => {
-    setScrolling(event.clientX);
-  }
+  const mouseDownHandler = (event: MouseEvent | TouchEvent) => {
+    if ('clientX' in event) {
+      setScrolling(event.clientX);
+    } else if ('touches' in event) {
+      setScrolling(event.touches[0].clientX);
+    }
+  };
 
-  const mouseUpHandler= (event: any) => {
-    let step = event.clientX - scrolling,
-        dir: boolean = step > 0 ? false : true;
+  const mouseUpHandler = (event: MouseEvent | TouchEvent) => {
+    let step = 0;
+
+    if ('clientX' in event) {
+      step = event.clientX - scrolling;
+    } else if ('touches' in event) {
+      step = event.changedTouches[0].clientX - scrolling;
+    }
+
+    let dir: boolean | null;
+
+    if (step > 0) {
+      dir = false;
+    } else if (step === 0) {
+      dir = null;
+    } else {
+      dir = true;
+    }
 
     handleSlideMove(dir);
-  }
-  
+  };
+
   return (
-    <StyledSliderWrapper zoomFactor={zoomFactor} visibleSlides={visibleSlides} slideMargin={slideMargin} onMouseDown={mouseDownHandler}>
+    <StyledSliderWrapper
+      zoomFactor={zoomFactor}
+      visibleSlides={visibleSlides}
+      slideMargin={slideMargin}
+      onMouseDown={mouseDownHandler}
+      onMouseUp={mouseUpHandler}
+      onTouchStart={mouseDownHandler}
+      onTouchEnd={mouseUpHandler}
+    >
       <StyledSlider
         visibleSlides={visibleSlides}
         transformValue={transformValue}
@@ -112,8 +141,6 @@ const SliderForecast: React.FC<SliderProps> = ({
         slideMargin={slideMargin}
         pageTransition={pageTransition}
         ref={sliderRef}
-        onMouseDown={mouseDownHandler}
-        onMouseUp={mouseUpHandler}
       >
         {children.map((child: any, i: any) => (
           <SliderItem
@@ -131,16 +158,16 @@ const SliderForecast: React.FC<SliderProps> = ({
           </SliderItem>
         ))}
       </StyledSlider>
-      {currentPage > 0 && slideMargin !== 40 && (
-        <div className='button-wrapper back'>
-          <button className='button back' onClick={() => handleSlideMove(false)}>
+      {currentPage > 0 && slideMargin !== 10 && (
+        <div className="button-wrapper back">
+          <button className="button back" onClick={() => handleSlideMove(false)}>
             &#8249;
           </button>
         </div>
       )}
-      {currentPage !== totalPages && slideMargin !== 40 && (
-        <div className='button-wrapper forward'>
-          <button className='button forward' onClick={() => handleSlideMove(true)}>
+      {currentPage !== totalPages && slideMargin !== 10 && (
+        <div className="button-wrapper forward">
+          <button className="button forward" onClick={() => handleSlideMove(true)}>
             &#8250;
           </button>
         </div>

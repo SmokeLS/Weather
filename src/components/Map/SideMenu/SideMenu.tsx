@@ -113,7 +113,7 @@ export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
   }, [open]);
 
   return (
-    <Stack direction="row" spacing={2} zIndex={9999} position="absolute" right={30} top={10}>
+    <Stack direction="row" spacing={2} zIndex={9999} position="absolute" right={20} top={80}>
       <div>
         <Button
           ref={anchorRef}

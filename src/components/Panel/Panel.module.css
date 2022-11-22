@@ -1,0 +1,43 @@
+.inputStyle {
+    background: #fff;
+    border-radius: 5px;
+    width: 260px;
+    padding: 0 5px;
+}
+
+.inputStyleMobile {
+    background: #fff;
+    border-radius: 5px;
+    width: 100%;
+    padding: 0 5px;
+}
+
+.toolbarStyle {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.toolbarStyleMobile {
+    width: 90%;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.searchStyle {
+    width: 240px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.SearchIconStyle {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.searchStyleMobile {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}

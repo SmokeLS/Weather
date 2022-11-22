@@ -45,15 +45,15 @@ const Map = () => {
   }
 
   const MapContainerStyle = {
-    height: 'calc(100vh - 66px)',
+    height: '100vh',
     width: '100%',
     position: 'relative',
     top: 0,
     left: 0,
-    marginTop: -20,
+    marginTop: -86,
   };
 
-  const DisplayMaps = maps.map((item, index) => {
+  const DisplayMaps = maps.map((item) => {
 
     return (
       <TileLayer
@@ -69,7 +69,8 @@ const Map = () => {
   return (
     <>
       {/* @ts-ignore */}
-      <MapContainer center={position} style={MapContainerStyle} maxBounds={bounds}
+      <MapContainer center={position} style={MapContainerStyle} maxBounds={bounds} 
+        zoomControl={false}
         setView={position}
         zoom={10}
         scrollWheelZoom={true}
