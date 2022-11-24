@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 import { useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/redux-store';
-import exchangePicture from '../../../common/exchangePicture/exchangePicture';
+import exchangePicture from '../../../common/exchangePictures';
 import { colPressure } from '../../../common/convert';
 
 const Wrapper = styled.div`

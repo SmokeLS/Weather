@@ -1,17 +1,17 @@
-import sun from '../../assets/sun.png';
-import storm from '../../assets/storm.png';
-import snow from '../../assets/snow.png';
-import showerRain from '../../assets/shower-rain.png';
-import rainyDay from '../../assets/rainy-day.png';
-import rainyNight from '../../assets/rainy-night.png';
-import night from '../../assets/night.png';
-import mist from '../../assets/mist.png';
-import cloudySun from '../../assets/cloudy-sun.png';
-import cloudyNight from '../../assets/cloudy-night.png';
-import cloud from '../../assets/cloud.png';
-import brokenClouds from '../../assets/broken-clouds.png';
+import sun from '../assets/sun.png';
+import storm from '../assets/storm.png';
+import snow from '../assets/snow.png';
+import showerRain from '../assets/shower-rain.png';
+import rainyDay from '../assets/rainy-day.png';
+import rainyNight from '../assets/rainy-night.png';
+import night from '../assets/night.png';
+import mist from '../assets/mist.png';
+import cloudySun from '../assets/cloudy-sun.png';
+import cloudyNight from '../assets/cloudy-night.png';
+import cloud from '../assets/cloud.png';
+import brokenClouds from '../assets/broken-clouds.png';
 
-const exchangePicture : Function = (name: string) => {
+const exchangePictures : Function = (name: string) => {
   switch (name) {
     case '01d': {
       return { src: sun, alt: 'sun' };
@@ -73,4 +73,4 @@ const exchangePicture : Function = (name: string) => {
   }
 };
 
-export default exchangePicture;
+export default exchangePictures;

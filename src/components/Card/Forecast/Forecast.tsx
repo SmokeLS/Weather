@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { toCelsius, toFahrenheit } from '../../../common/convert';
-import exchangePicture from '../../../common/exchangePicture/exchangePicture';
+import exchangePictures from '../../../common/exchangePictures';
 import { AppStateType } from '../../../redux/redux-store';
 import { ListType } from '../../../types/types';
 
@@ -47,7 +47,7 @@ const Forecast: React.FC<PropsType> = ({ item, index, handleOpenDialog }) => {
       </TextWrapper>
       <ImgWrapper>
         <div>{item.main.humidity}%</div>
-        <Img src={exchangePicture(item.weather[0].icon).src} alt={exchangePicture(item.weather[0].icon).alt}/>
+        <Img src={exchangePictures(item.weather[0].icon).src} alt={exchangePictures(item.weather[0].icon).alt}/>
       </ImgWrapper>
       <TextWrapper>{convertedTemp}</TextWrapper>
     </div>
