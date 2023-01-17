@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-// Components
 import SliderItem from './SliderItem';
-// Styles
 import { StyledSliderWrapper, StyledSlider } from './SliderStyles';
-// Types
 
 type SliderProps = {
   children?: any;
@@ -37,7 +34,6 @@ const SliderForecast: React.FC<SliderProps> = ({
   const sliderRef = useRef<HTMLElement>(null);
 
   const visibleSlides = numberOfSlides(maxVisibleSlides, scrollSize);
-  // Pages start at 0, therefore -1 at the end here
   const totalPages: number = Math.ceil(children.length / visibleSlides) - 1;
 
   useEffect(() => {
@@ -57,8 +53,7 @@ const SliderForecast: React.FC<SliderProps> = ({
     }
   }, [sliderRef, currentPage, scrollSize, totalPages]);
 
-  // Have to disable hover effect on slides when flipping page
-  // Otherwise it will look ugly when mouse hovers over the slides
+
   const disableHoverEffect = () => {
     if (sliderRef.current) sliderRef.current.style.pointerEvents = 'none';
     setTimeout(() => {

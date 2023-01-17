@@ -73,7 +73,7 @@ export const actions = {
   setTempUnit: (tempUnit: '°C' | '°F') => ({ type: SET_TEMPUNIT, tempUnit } as const),
   setCity: (city: string) => ({ type: SET_CITY, city } as const),
   setMaps: (maps: Array<string>) => ({ type: SET_MAPS, maps } as const),
-  setIsLoading: (isLoading: boolean) => ({type: SET_ISLOADING, isLoading} as const),
+  setIsLoading: (isLoading: boolean) => ({ type: SET_ISLOADING, isLoading } as const),
 };
 
 export const setCurrentWeather = (
@@ -81,6 +81,14 @@ export const setCurrentWeather = (
 ): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof weatherAPI, void> =>
   thunk(async (dispatch: DispatchType) => {
     const currentWeather = await weatherAPI.getCurrentWeather(city);
+    dispatch(actions.setCurrentWeather(currentWeather));
+  });
+
+export const setCurrentWeatherLatLon = (
+  lat: number, lon: number
+): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof weatherAPI, void> =>
+  thunk(async (dispatch: DispatchType) => {
+    const currentWeather = await weatherAPI.getCurrentWeatherLatLon(lat, lon);
     dispatch(actions.setCurrentWeather(currentWeather));
   });
 
@@ -92,6 +100,14 @@ export const setForecast = (
     dispatch(actions.setForecast(forecast));
   });
 
+
+  export const setForecastLatLon = (
+    lat: number, lon: number
+  ): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof weatherAPI, void> =>
+    thunk(async (dispatch: DispatchType) => {
+      const forecast = await weatherAPI.getForecastLatLon(lat, lon);
+      dispatch(actions.setForecast(forecast));
+    });
 // export const setMaps = (maps?: string): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof mapsAPI, void> =>
 //   thunk(async (dispatch: DispatchType) => {
 //     // dispatch(actions.setIsLoading(true));

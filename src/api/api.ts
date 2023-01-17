@@ -14,8 +14,16 @@ export const weatherAPI = {
     const res = await instance.get<WeatherType>(`weather?appid=0e2def30c3069fd2e56f866c8c70d407&q=${city}`);
     return res.data;
   },
+  async getCurrentWeatherLatLon(lat: number, lon: number) {
+    const res = await instance.get<WeatherType>(`weather?appid=0e2def30c3069fd2e56f866c8c70d407&lat=${lat}&lon=${lon}`);
+    return res.data;
+  },
   async getForecast(city: string) {
     const res = await instance.get<ForecastType>(`forecast?appid=0e2def30c3069fd2e56f866c8c70d407&q=${city}`);
+    return res.data;
+  },
+  async getForecastLatLon(lat: number, lon: number) {
+    const res = await instance.get<ForecastType>(`forecast?appid=0e2def30c3069fd2e56f866c8c70d407&lat=${lat}&lon=${lon}`);
     return res.data;
   },
   // async getCities() {

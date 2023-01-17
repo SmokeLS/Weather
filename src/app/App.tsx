@@ -7,7 +7,7 @@ import Panel from '../components/Panel/Panel';
 import Map from '../components/Map/Map';
 import ErrorBoundary from '../common/ErrorBoundary/ErrorBoundary';
 import { useDispatch } from 'react-redux';
-import { actions, setCurrentWeather, setForecast } from '../redux/app-reducer';
+import { actions, setCurrentWeather, setCurrentWeatherLatLon, setForecast, setForecastLatLon } from '../redux/app-reducer';
 
 const ImgBackground = styled.div`
   background-image: url(${rain});
@@ -33,11 +33,21 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.setIsLoading(true));
-    dispatch(setCurrentWeather('Москва'));
-    dispatch(setForecast('Москва'));
-    dispatch(actions.setIsLoading(false));
+    navigator.geolocation.getCurrentPosition((position) => {
+      dispatch(actions.setIsLoading(true));
+      const { latitude, longitude } = position.coords;
+      dispatch(setCurrentWeatherLatLon(latitude, longitude));
+      dispatch(setForecastLatLon(latitude, longitude));
+      dispatch(actions.setIsLoading(false));
+    });
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(actions.setIsLoading(true));
+  //   dispatch(setCurrentWeather('Москва'));
+  //   dispatch(setForecast('Москва'));
+  //   dispatch(actions.setIsLoading(false));
+  // }, [dispatch]);
 
   return (
     <>
