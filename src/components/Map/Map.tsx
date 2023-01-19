@@ -25,16 +25,18 @@ const RecenterAutomatically: React.FC<AutoType> = ({ lat, lng }) => {
   return null;
 };
 
-const Map = () => {
+type PropsType = {
+  currentLocation: [number, number];
+  setCurrentLocation: Function;
+}
+
+const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
   const dispatch = useDispatch();
   const maps = useSelector((state: AppStateType) => state.app.maps);
   const currentWeather = useSelector((state: AppStateType) => state.app.currentWeather);
   const tempUnit = useSelector((state: AppStateType) => state.app.tempUnit);
-  const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
-  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
 
-  const position = React.useMemo(() => [selectedPosition[0] ? selectedPosition[0] : initialPosition[0],
-                    selectedPosition[1] ? selectedPosition[1] : initialPosition[1]], [selectedPosition, initialPosition]);
+  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([currentLocation[0], currentLocation[1]]);
 
   const bounds = [
     [
@@ -43,18 +45,11 @@ const Map = () => {
     ],
   ];
 
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     const { latitude, longitude } = position.coords;
-  //     setInitialPosition([latitude, longitude]);
-  //   });
-  // }, []);
-
   useEffect(() => {
-    const [latitude, longitude] = [position[0], position[1]]
+    const [latitude, longitude] = [selectedPosition[0], selectedPosition[1]];
     dispatch(setCurrentWeatherLatLon(latitude, longitude));
     dispatch(setForecastLatLon(latitude,longitude));
-  }, [position, dispatch]);
+  }, [selectedPosition, dispatch]);
 
   useEffect(() => {
     if (!currentWeather) return;
@@ -62,18 +57,24 @@ const Map = () => {
     if (currentWeather.coord.lat !== selectedPosition[0] && currentWeather.coord.lon !== selectedPosition[1]) {
       setSelectedPosition([currentWeather.coord.lat, currentWeather.coord.lon]);
     }
-  }, [currentWeather, selectedPosition]);
+  }, [currentWeather]);
+
+  useEffect(() => {
+    return () => {
+      setCurrentLocation([selectedPosition[0], selectedPosition[1]]);
+    }
+  }, [selectedPosition, setCurrentLocation]);
 
   if (!currentWeather) return <div></div>;
 
   const Markers = () => {
-    const map = useMapEvents({
+    useMapEvents({
       click(e) {
         setSelectedPosition([e.latlng.lat, e.latlng.lng]);
       },
     });
 
-    return selectedPosition[0] && selectedPosition[1] ? (
+    return selectedPosition[0] && selectedPosition[1] &&
       <Marker
         icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })}
         position={selectedPosition}
@@ -83,17 +84,6 @@ const Map = () => {
           <br /> longitude : {selectedPosition[1]}.
         </Popup>
       </Marker>
-    ) : (
-      <Marker
-        icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })}
-        position={initialPosition}
-      >
-        <Popup>
-          {currentWeather.name}, {convertedTemp} <br /> latitude : {initialPosition[0]}
-          <br /> longitude : {initialPosition[1]}.
-        </Popup>
-      </Marker>
-    );
   };
 
   const ChangeMaps = (maps: Array<string>) => {
@@ -119,17 +109,15 @@ const Map = () => {
     );
   });
 
-  console.log(position);
-
   const convertedTemp =
     tempUnit === '°C' ? `${toCelsius(currentWeather.main.temp)}°C` : `${toFahrenheit(currentWeather.main.temp)}°F`;
 
   return (
     <>
       {/* @ts-ignore */}
-      <MapContainer center={position} style={MapContainerStyle} maxBounds={bounds}
+      <MapContainer center={selectedPosition} style={MapContainerStyle} maxBounds={bounds}
         zoomControl={false}
-        setView={position}
+        setView={selectedPosition}
         zoom={10}
         scrollWheelZoom={true}
         attributionControl={false}
@@ -139,10 +127,19 @@ const Map = () => {
         <SideMenu ChangeMaps={ChangeMaps} />
         {/* @ts-ignore */}
         <Markers />
-        <RecenterAutomatically lat={position[0]} lng={position[1]} />
+        <RecenterAutomatically lat={selectedPosition[0]} lng={selectedPosition[1]} />
       </MapContainer>
     </>
   );
 };
 
 export default Map;
+
+
+
+  // useEffect(() => {
+  //   const [latitude, longitude] = [currentLocation[0], currentLocation[1]]
+  //   dispatch(setCurrentWeatherLatLon(latitude, longitude));
+  //   dispatch(setForecastLatLon(latitude,longitude));
+  //   setSelectedPosition([latitude, longitude]);
+  // }, [currentLocation, dispatch]);  

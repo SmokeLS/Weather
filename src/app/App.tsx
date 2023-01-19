@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import rain from '../assets/rain.jpg';
@@ -31,23 +31,20 @@ const MainPage = styled.div`
 function App() {
 
   const dispatch = useDispatch();
+  const [currentLocation, setCurrentLocation] = useState([0, 0]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      dispatch(actions.setIsLoading(true));
       const { latitude, longitude } = position.coords;
+
+      setCurrentLocation([latitude, longitude]);
+
+      dispatch(actions.setIsLoading(true));
       dispatch(setCurrentWeatherLatLon(latitude, longitude));
       dispatch(setForecastLatLon(latitude, longitude));
       dispatch(actions.setIsLoading(false));
     });
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(actions.setIsLoading(true));
-  //   dispatch(setCurrentWeather('Москва'));
-  //   dispatch(setForecast('Москва'));
-  //   dispatch(actions.setIsLoading(false));
-  // }, [dispatch]);
 
   return (
     <>
@@ -68,7 +65,7 @@ function App() {
           <Route 
             path='/map'
             element={
-              <Map />
+              <Map currentLocation={currentLocation as [number, number]} setCurrentLocation={setCurrentLocation}/>
             }
           />
         </Routes>
