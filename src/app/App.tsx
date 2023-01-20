@@ -7,13 +7,7 @@ import Panel from '../components/Panel/Panel';
 import Map from '../components/Map/Map';
 import ErrorBoundary from '../common/ErrorBoundary/ErrorBoundary';
 import { useDispatch } from 'react-redux';
-import {
-  actions,
-  setCurrentWeather,
-  setCurrentWeatherLatLon,
-  setForecast,
-  setForecastLatLon,
-} from '../redux/app-reducer';
+import { actions, setCurrentWeatherLatLon, setForecastLatLon } from '../redux/app-reducer';
 
 const ImgBackground = styled.div`
   background-image: url(${rain});

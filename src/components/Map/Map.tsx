@@ -8,7 +8,7 @@ import SideMenu from './SideMenu/SideMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/redux-store';
 import { actions, setCurrentWeatherLatLon, setForecastLatLon } from '../../redux/app-reducer';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { toCelsius, toFahrenheit } from '../../common/convert';
 
 type AutoType = {
@@ -36,8 +36,6 @@ const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
   const currentWeather = useSelector((state: AppStateType) => state.app.currentWeather);
   const tempUnit = useSelector((state: AppStateType) => state.app.tempUnit);
 
-  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([currentLocation[0], currentLocation[1]]);
-
   const bounds = [
     [
       [-90, -190],
@@ -45,50 +43,41 @@ const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
     ],
   ];
 
-  console.log(currentLocation, selectedPosition);
-
-  useEffect(() => {
-    const [latitude, longitude] = [selectedPosition[0], selectedPosition[1]];
-
-    dispatch(setCurrentWeatherLatLon(latitude, longitude));
-    dispatch(setForecastLatLon(latitude, longitude));
-    dispatch(actions.setIsLoading(false));
-  }, [selectedPosition, dispatch]);
-
   useEffect(() => {
     if (!currentWeather) return;
 
-    if (currentWeather.coord.lat !== selectedPosition[0] && currentWeather.coord.lon !== selectedPosition[1]) {
-      setSelectedPosition([currentWeather.coord.lat, currentWeather.coord.lon]);
-    }
-  }, [currentWeather]);
+    setCurrentLocation([currentWeather.coord.lat, currentWeather.coord.lon]);
+  }, [currentWeather, setCurrentLocation]);
 
   useEffect(() => {
+    if (!currentWeather) return;
     
     return () => {
-      if (!currentWeather) return;
-      
       setCurrentLocation([currentWeather.coord.lat, currentWeather.coord.lon]);
     }
-  }, [currentWeather]);
-
+  }, []);
+  
   if (!currentWeather) return <div></div>;
 
   const Markers = () => {
     useMapEvents({
       click(e) {
-        if (e.originalEvent.target === e.originalEvent.currentTarget) setSelectedPosition([e.latlng.lat, e.latlng.lng]);
+        if (e.originalEvent.target === e.originalEvent.currentTarget) {
+          dispatch(setCurrentWeatherLatLon(e.latlng.lat, e.latlng.lng));
+          dispatch(setForecastLatLon(e.latlng.lat, e.latlng.lng));
+          setCurrentLocation([e.latlng.lat, e.latlng.lng]);
+        }
       },
     });
 
-    return selectedPosition[0] && selectedPosition[1] &&
+    return currentLocation[0] && currentLocation[1] &&
       <Marker
         icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })}
-        position={selectedPosition}
+        position={currentLocation}
       >
         <Popup>
-          {currentWeather.name}, {convertedTemp} <br /> latitude : {selectedPosition[0]}
-          <br /> longitude : {selectedPosition[1]}.
+          {currentWeather.name}, {convertedTemp} <br /> latitude : {currentLocation[0]}
+          <br /> longitude : {currentLocation[1]}.
         </Popup>
       </Marker>
   };
@@ -122,9 +111,9 @@ const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
   return (
     <>
       {/* @ts-ignore */}
-      <MapContainer center={selectedPosition} style={MapContainerStyle} maxBounds={bounds}
+      <MapContainer center={currentLocation} style={MapContainerStyle} maxBounds={bounds}
         zoomControl={false}
-        setView={selectedPosition}
+        setView={currentLocation}
         zoom={10}
         doubleClickZoom={false}
         scrollWheelZoom={true}
@@ -135,19 +124,10 @@ const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
         <SideMenu ChangeMaps={ChangeMaps} />
         {/* @ts-ignore */}
         <Markers />
-        <RecenterAutomatically lat={selectedPosition[0]} lng={selectedPosition[1]} />
+        <RecenterAutomatically lat={currentLocation[0]} lng={currentLocation[1]} />
       </MapContainer>
     </>
   );
 };
 
 export default Map;
-
-
-
-  // useEffect(() => {
-  //   const [latitude, longitude] = [currentLocation[0], currentLocation[1]]
-  //   dispatch(setCurrentWeatherLatLon(latitude, longitude));
-  //   dispatch(setForecastLatLon(latitude,longitude));
-  //   setSelectedPosition([latitude, longitude]);
-  // }, [currentLocation, dispatch]);  
