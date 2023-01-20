@@ -76,7 +76,7 @@ const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
         position={currentLocation}
       >
         <Popup>
-          {currentWeather.name}, {convertedTemp} <br /> latitude : {currentLocation[0]}
+          {currentWeather.name || "Unknown"}, {convertedTemp} <br /> latitude : {currentLocation[0]}
           <br /> longitude : {currentLocation[1]}.
         </Popup>
       </Marker>

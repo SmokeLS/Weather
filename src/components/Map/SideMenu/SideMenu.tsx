@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
+import styled from 'styled-components';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
@@ -9,18 +10,45 @@ import MenuList from '@mui/material/MenuList';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box/Box';
+import gradient from '../../../common/gradient';
+import WeathersConversion from '../../../common/convertWeathers';
 
 type PropsType = {
-  ChangeMaps: Function,
-}
-type StateType = { Temperature: boolean; Wind: boolean; Rainfall: boolean; Snow: boolean; Pressure: boolean, Clouds: boolean,Isobar: boolean};
+  ChangeMaps: Function;
+};
+type StateType = {
+  Temperature: boolean;
+  Wind: boolean;
+  Rainfall: boolean;
+  Snow: boolean;
+  Pressure: boolean;
+  Clouds: boolean;
+  Isobar: boolean;
+};
 
-export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
+const BoxInfo = styled.div`
+  width: 280px;
+  height: 24px;
+  align-items: center;
+  justify-content: space-around;
+  background: #fff;
+  border-radius: 5px;
+  display: flex;
+`;
+
+const GradientBlock = styled.div`
+  width: 200px;
+  height: 8px;
+  background: ${(props) => gradient(props.weather)};
+`;
+
+export const SideMenu: React.FC<PropsType> = ({ ChangeMaps }) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
 
   const [checked, setChecked] = React.useState({
-    Temperature: false,
+    Temperature: true,
     Wind: false,
     Rainfall: false,
     Snow: false,
@@ -30,14 +58,14 @@ export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
   } as StateType);
 
   const maps = {
-    "temp_new": checked.Temperature,
-    "wind_new": checked.Wind,
-    "rain_new": checked.Rainfall,
-    "snow_new": checked.Snow,
-    "pressure_new": checked.Pressure,
-    "clouds_new": checked.Clouds,
-    "pressure_cntr": checked.Isobar,
-  }
+    temp_new: checked.Temperature,
+    wind_new: checked.Wind,
+    rain_new: checked.Rainfall,
+    snow_new: checked.Snow,
+    pressure_new: checked.Pressure,
+    clouds_new: checked.Clouds,
+    pressure_cntr: checked.Isobar,
+  };
 
   const handleToggle = (e: any) => {
     setOpen((prevOpen) => !prevOpen);
@@ -53,43 +81,43 @@ export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
 
   useEffect(() => {
     //@ts-ignore
-    ChangeMaps(Object.keys(maps).filter(item => maps[item]));
+    ChangeMaps(Object.keys(maps).filter((item) => maps[item]));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked]);
 
   const MenuItemTempHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
+    if ((event.target as HTMLElement).tagName === 'SPAN' || (event.target as HTMLElement).tagName === 'LABEL') return;
     setChecked(() => ({ ...checked, Temperature: !checked.Temperature }));
   };
-  
+
   const MenuItemWindHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
+    if ((event.target as HTMLElement).tagName === 'SPAN' || (event.target as HTMLElement).tagName === 'LABEL') return;
     setChecked(() => ({ ...checked, Wind: !checked.Wind }));
   };
-  
+
   const MenuItemRainHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
+    if ((event.target as HTMLElement).tagName === 'SPAN' || (event.target as HTMLElement).tagName === 'LABEL') return;
     setChecked(() => ({ ...checked, Rainfall: !checked.Rainfall }));
   };
 
   const MenuItemSnowHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
+    if ((event.target as HTMLElement).tagName === 'SPAN' || (event.target as HTMLElement).tagName === 'LABEL') return;
     setChecked(() => ({ ...checked, Snow: !checked.Snow }));
   };
 
   const MenuItemPressureHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
+    if ((event.target as HTMLElement).tagName === 'SPAN' || (event.target as HTMLElement).tagName === 'LABEL') return;
     setChecked(() => ({ ...checked, Pressure: !checked.Pressure }));
   };
 
   const MenuItemCloudsHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
+    if ((event.target as HTMLElement).tagName === 'SPAN' || (event.target as HTMLElement).tagName === 'LABEL') return;
     setChecked(() => ({ ...checked, Clouds: !checked.Clouds }));
   };
 
   const MenuItemIsobarHandler = (event: Event | React.SyntheticEvent) => {
-    if((event.target as HTMLElement).tagName === "SPAN" || (event.target as HTMLElement).tagName === "LABEL") return;
+    if ((event.target as HTMLElement).tagName === 'SPAN' || (event.target as HTMLElement).tagName === 'LABEL') return;
     setChecked(() => ({ ...checked, Isobar: !checked.Isobar }));
   };
 
@@ -113,72 +141,93 @@ export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
   }, [open]);
 
   return (
-    <Stack direction="row" spacing={2} zIndex={9999} position="absolute" right={20} top={80}>
-      <div>
-        <Button
-          ref={anchorRef}
-          id="composition-button"
-          aria-controls={open ? 'composition-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-          variant="contained"
-        >
-          Фильтры
-        </Button>
-        <Popper
-          open={open}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          placement="bottom-start"
-          transition
-          disablePortal
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom',
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={HandleItem}>
-                  <MenuList
-                    autoFocusItem={open}
-                    id="composition-menu"
-                    aria-labelledby="composition-button"
-                    onKeyDown={handleListKeyDown}
-                  >
-                    <MenuItem onClick={MenuItemTempHandler}>
-                      <FormControlLabel control={<Checkbox checked={checked.Temperature} />} label="Temperature" />
-                    </MenuItem>
-                    <MenuItem onClick={MenuItemWindHandler}>
-                      <FormControlLabel control={<Checkbox checked={checked.Wind}/>} label="Wind" />
-                    </MenuItem>
-                    <MenuItem onClick={MenuItemRainHandler}>
-                      <FormControlLabel control={<Checkbox checked={checked.Rainfall}/>} label="Rainfall" />
-                    </MenuItem>
-                    <MenuItem onClick={MenuItemSnowHandler}>
-                      <FormControlLabel control={<Checkbox checked={checked.Snow}/>} label="Snow" />
-                    </MenuItem>
-                    <MenuItem onClick={MenuItemPressureHandler}>
-                      <FormControlLabel control={<Checkbox checked={checked.Pressure}/>} label="Pressure" />
-                    </MenuItem>
-                    <MenuItem onClick={MenuItemCloudsHandler}>
-                      <FormControlLabel control={<Checkbox checked={checked.Clouds}/>} label="Clouds" />
-                    </MenuItem>
-                    <MenuItem onClick={MenuItemIsobarHandler}>
-                      <FormControlLabel control={<Checkbox checked={checked.Isobar}/>} label="Isobar" />
-                    </MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
-    </Stack>
+    <>
+      <Stack direction="row" spacing={2} zIndex={9999} position="absolute" right={20} top={80}>
+        <div>
+          <Button
+            ref={anchorRef}
+            id="composition-button"
+            aria-controls={open ? 'composition-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+            onClick={handleToggle}
+            variant="contained"
+          >
+            Фильтры
+          </Button>
+          <Popper
+            open={open}
+            anchorEl={anchorRef.current}
+            role={undefined}
+            placement="bottom-start"
+            transition
+            disablePortal
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{
+                  transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom',
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={HandleItem}>
+                    <MenuList
+                      autoFocusItem={open}
+                      id="composition-menu"
+                      aria-labelledby="composition-button"
+                      onKeyDown={handleListKeyDown}
+                    >
+                      <MenuItem onClick={MenuItemTempHandler}>
+                        <FormControlLabel control={<Checkbox checked={checked.Temperature} />} label="Temperature" />
+                      </MenuItem>
+                      <MenuItem onClick={MenuItemWindHandler}>
+                        <FormControlLabel control={<Checkbox checked={checked.Wind} />} label="Wind" />
+                      </MenuItem>
+                      <MenuItem onClick={MenuItemRainHandler}>
+                        <FormControlLabel control={<Checkbox checked={checked.Rainfall} />} label="Rainfall" />
+                      </MenuItem>
+                      <MenuItem onClick={MenuItemSnowHandler}>
+                        <FormControlLabel control={<Checkbox checked={checked.Snow} />} label="Snow" />
+                      </MenuItem>
+                      <MenuItem onClick={MenuItemPressureHandler}>
+                        <FormControlLabel control={<Checkbox checked={checked.Pressure} />} label="Pressure" />
+                      </MenuItem>
+                      <MenuItem onClick={MenuItemCloudsHandler}>
+                        <FormControlLabel control={<Checkbox checked={checked.Clouds} />} label="Clouds" />
+                      </MenuItem>
+                      <MenuItem onClick={MenuItemIsobarHandler}>
+                        <FormControlLabel control={<Checkbox checked={checked.Isobar} />} label="Isobar" />
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </div>
+      </Stack>
+      <Stack spacing={1} zIndex={9999} position="absolute" right={20} bottom={20}>
+        {Object.keys(maps).map((item) => {
+          //@ts-ignore
+          if (maps[item] && item !== 'pressure_cntr') {
+            const convertedWeather = WeathersConversion(item);
+
+            console.log(convertedWeather);
+
+            return (
+              <BoxInfo key={item}>
+                {item}
+                <GradientBlock weather={convertedWeather} />
+              </BoxInfo>
+            );
+          }
+
+          return <></>;
+        })}
+      </Stack>
+    </>
   );
-}
+};
 
 export default SideMenu;

@@ -18,8 +18,6 @@ const initialState = {
   forecast: null as ForecastType | null,
   tempUnit: '°C' as '°C' | '°F',
   city: 'Moscow' as string,
-  lat: 0 as number,
-  lon: 0 as number,
   maps: [] as Array<string>,
   isLoading: false,
 };
