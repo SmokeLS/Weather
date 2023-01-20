@@ -45,10 +45,14 @@ const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
     ],
   ];
 
+  console.log(currentLocation, selectedPosition);
+
   useEffect(() => {
     const [latitude, longitude] = [selectedPosition[0], selectedPosition[1]];
+
     dispatch(setCurrentWeatherLatLon(latitude, longitude));
-    dispatch(setForecastLatLon(latitude,longitude));
+    dispatch(setForecastLatLon(latitude, longitude));
+    dispatch(actions.setIsLoading(false));
   }, [selectedPosition, dispatch]);
 
   useEffect(() => {
@@ -60,17 +64,20 @@ const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
   }, [currentWeather]);
 
   useEffect(() => {
+    
     return () => {
-      setCurrentLocation([selectedPosition[0], selectedPosition[1]]);
+      if (!currentWeather) return;
+      
+      setCurrentLocation([currentWeather.coord.lat, currentWeather.coord.lon]);
     }
-  }, [selectedPosition, setCurrentLocation]);
+  }, [currentWeather]);
 
   if (!currentWeather) return <div></div>;
 
   const Markers = () => {
     useMapEvents({
       click(e) {
-        setSelectedPosition([e.latlng.lat, e.latlng.lng]);
+        if (e.originalEvent.target === e.originalEvent.currentTarget) setSelectedPosition([e.latlng.lat, e.latlng.lng]);
       },
     });
 
@@ -119,6 +126,7 @@ const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
         zoomControl={false}
         setView={selectedPosition}
         zoom={10}
+        doubleClickZoom={false}
         scrollWheelZoom={true}
         attributionControl={false}
       >

@@ -39,7 +39,7 @@ export const SideMenu : React.FC<PropsType> = ({ChangeMaps}) => {
     "pressure_cntr": checked.Isobar,
   }
 
-  const handleToggle = () => {
+  const handleToggle = (e: any) => {
     setOpen((prevOpen) => !prevOpen);
   };
 

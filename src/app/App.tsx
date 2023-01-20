@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import rain from '../assets/rain.jpg';
@@ -7,7 +7,13 @@ import Panel from '../components/Panel/Panel';
 import Map from '../components/Map/Map';
 import ErrorBoundary from '../common/ErrorBoundary/ErrorBoundary';
 import { useDispatch } from 'react-redux';
-import { actions, setCurrentWeather, setCurrentWeatherLatLon, setForecast, setForecastLatLon } from '../redux/app-reducer';
+import {
+  actions,
+  setCurrentWeather,
+  setCurrentWeatherLatLon,
+  setForecast,
+  setForecastLatLon,
+} from '../redux/app-reducer';
 
 const ImgBackground = styled.div`
   background-image: url(${rain});
@@ -29,7 +35,6 @@ const MainPage = styled.div`
 `;
 
 function App() {
-
   const dispatch = useDispatch();
   const [currentLocation, setCurrentLocation] = useState([0, 0]);
 
@@ -62,10 +67,10 @@ function App() {
               </MainPage>
             }
           ></Route>
-          <Route 
-            path='/map'
+          <Route
+            path="/map"
             element={
-              <Map currentLocation={currentLocation as [number, number]} setCurrentLocation={setCurrentLocation}/>
+              <Map currentLocation={currentLocation as [number, number]} setCurrentLocation={setCurrentLocation} />
             }
           />
         </Routes>

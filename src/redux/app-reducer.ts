@@ -18,6 +18,8 @@ const initialState = {
   forecast: null as ForecastType | null,
   tempUnit: '°C' as '°C' | '°F',
   city: 'Moscow' as string,
+  lat: 0 as number,
+  lon: 0 as number,
   maps: [] as Array<string>,
   isLoading: false,
 };
@@ -99,7 +101,6 @@ export const setForecast = (
     const forecast = await weatherAPI.getForecast(city);
     dispatch(actions.setForecast(forecast));
   });
-
 
   export const setForecastLatLon = (
     lat: number, lon: number
