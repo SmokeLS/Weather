@@ -28,9 +28,9 @@ const RecenterAutomatically: React.FC<AutoType> = ({ lat, lng }) => {
 type PropsType = {
   currentLocation: [number, number];
   setCurrentLocation: Function;
-}
+};
 
-const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
+const Map: React.FC<PropsType> = ({ currentLocation, setCurrentLocation }) => {
   const dispatch = useDispatch();
   const maps = useSelector((state: AppStateType) => state.app.maps);
   const currentWeather = useSelector((state: AppStateType) => state.app.currentWeather);
@@ -51,12 +51,12 @@ const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
 
   useEffect(() => {
     if (!currentWeather) return;
-    
+
     return () => {
       setCurrentLocation([currentWeather.coord.lat, currentWeather.coord.lon]);
-    }
+    };
   }, []);
-  
+
   if (!currentWeather) return <div></div>;
 
   const Markers = () => {
@@ -70,16 +70,20 @@ const Map : React.FC<PropsType> = ({currentLocation, setCurrentLocation}) => {
       },
     });
 
-    return currentLocation[0] && currentLocation[1] &&
-      <Marker
-        icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })}
-        position={currentLocation}
-      >
-        <Popup>
-          {currentWeather.name || "Unknown"}, {convertedTemp} <br /> latitude : {currentLocation[0]}
-          <br /> longitude : {currentLocation[1]}.
-        </Popup>
-      </Marker>
+    return (
+      currentLocation[0] &&
+      currentLocation[1] && (
+        <Marker
+          icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })}
+          position={currentLocation}
+        >
+          <Popup>
+            {currentWeather.name || 'Unknown'}, {convertedTemp} <br /> latitude : {currentLocation[0]}
+            <br /> longitude : {currentLocation[1]}.
+          </Popup>
+        </Marker>
+      )
+    );
   };
 
   const ChangeMaps = (maps: Array<string>) => {

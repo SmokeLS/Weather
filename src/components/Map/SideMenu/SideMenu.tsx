@@ -10,7 +10,7 @@ import MenuList from '@mui/material/MenuList';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box/Box';
+
 import gradient from '../../../common/gradient';
 import WeathersConversion from '../../../common/convertWeathers';
 
@@ -37,10 +37,14 @@ const BoxInfo = styled.div`
   display: flex;
 `;
 
-const GradientBlock = styled.div`
+type GradientType = {
+  weather: string;
+};
+
+const GradientBlock = styled.div<GradientType>`
   width: 200px;
   height: 8px;
-  background: ${(props) => gradient(props.weather)};
+  background: ${(props: any) => gradient(props.weather)};
 `;
 
 export const SideMenu: React.FC<PropsType> = ({ ChangeMaps }) => {
@@ -48,7 +52,7 @@ export const SideMenu: React.FC<PropsType> = ({ ChangeMaps }) => {
   const anchorRef = React.useRef<HTMLButtonElement>(null);
 
   const [checked, setChecked] = React.useState({
-    Temperature: true,
+    Temperature: false,
     Wind: false,
     Rainfall: false,
     Snow: false,
@@ -213,17 +217,15 @@ export const SideMenu: React.FC<PropsType> = ({ ChangeMaps }) => {
           if (maps[item] && item !== 'pressure_cntr') {
             const convertedWeather = WeathersConversion(item);
 
-            console.log(convertedWeather);
-
             return (
               <BoxInfo key={item}>
                 {item}
-                <GradientBlock weather={convertedWeather} />
+                <GradientBlock key={convertedWeather} weather={convertedWeather} />
               </BoxInfo>
             );
           }
 
-          return <></>;
+          return <React.Fragment key={item}></React.Fragment>;
         })}
       </Stack>
     </>
