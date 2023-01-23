@@ -16,6 +16,8 @@ type AutoType = {
   lng: number;
 };
 
+let ready = true; // When click happens, we should wait for loading data, otherwise it will jump.
+
 const RecenterAutomatically: React.FC<AutoType> = ({ lat, lng }) => {
   const map = useMap();
   useEffect(() => {
@@ -63,9 +65,16 @@ const Map: React.FC<PropsType> = ({ currentLocation, setCurrentLocation }) => {
     useMapEvents({
       click(e) {
         if (e.originalEvent.target === e.originalEvent.currentTarget) {
-          dispatch(setCurrentWeatherLatLon(e.latlng.lat, e.latlng.lng));
-          dispatch(setForecastLatLon(e.latlng.lat, e.latlng.lng));
-          setCurrentLocation([e.latlng.lat, e.latlng.lng]);
+          if (!ready) return;
+          const a = dispatch(setCurrentWeatherLatLon(e.latlng.lat, e.latlng.lng));
+          const b = dispatch(setForecastLatLon(e.latlng.lat, e.latlng.lng));
+          ready = false;
+          
+          Promise.all([a.promise, b.promise]).then(values => {
+            ready = true
+            console.log()
+            setCurrentLocation([e.latlng.lat, e.latlng.lng]);
+          })
         }
       },
     });

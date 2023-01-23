@@ -11,8 +11,9 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
 
-import gradient from '../../../common/gradient';
+import {gradient, infoGradient} from '../../../common/gradient';
 import WeathersConversion from '../../../common/convertWeathers';
+import { Box } from '@mui/system';
 
 type PropsType = {
   ChangeMaps: Function;
@@ -28,10 +29,11 @@ type StateType = {
 };
 
 const BoxInfo = styled.div`
-  width: 280px;
-  height: 24px;
+  width: 360px;
+  height: 32px;
+  padding: 0 10px;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   background: #fff;
   border-radius: 5px;
   display: flex;
@@ -42,7 +44,7 @@ type GradientType = {
 };
 
 const GradientBlock = styled.div<GradientType>`
-  width: 200px;
+  width: 280px;
   height: 8px;
   background: ${(props: any) => gradient(props.weather)};
 `;
@@ -219,8 +221,11 @@ export const SideMenu: React.FC<PropsType> = ({ ChangeMaps }) => {
 
             return (
               <BoxInfo key={item}>
-                {item}
-                <GradientBlock key={convertedWeather} weather={convertedWeather} />
+                {convertedWeather}
+                <Box component="div" style={{alignSelf: "flex-end"}}>
+                  <GradientBlock key={convertedWeather} weather={convertedWeather} />
+                  {infoGradient(convertedWeather)}
+                </Box>
               </BoxInfo>
             );
           }
