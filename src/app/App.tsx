@@ -33,6 +33,20 @@ function App() {
   const [currentLocation, setCurrentLocation] = useState([0, 0]);
 
   useEffect(() => {
+ 
+    if (window.sessionStorage.getItem('latitude') && window.sessionStorage.getItem('latitude')) {
+      const latitude = parseInt(window.sessionStorage.getItem('latitude') ?? "");
+      const longitude = parseInt(window.sessionStorage.getItem('longitude') ?? "");
+
+      setCurrentLocation([latitude, longitude]);
+
+      dispatch(actions.setIsLoading(true));
+      dispatch(setCurrentWeatherLatLon(latitude, longitude));
+      dispatch(setForecastLatLon(latitude, longitude));
+      dispatch(actions.setIsLoading(false));
+      return;
+    }
+
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
 
@@ -43,6 +57,7 @@ function App() {
       dispatch(setForecastLatLon(latitude, longitude));
       dispatch(actions.setIsLoading(false));
     });
+    
   }, [dispatch]);
 
   return (
