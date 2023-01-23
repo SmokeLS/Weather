@@ -10,6 +10,7 @@ import { AppStateType } from '../../redux/redux-store';
 import { actions, setCurrentWeatherLatLon, setForecastLatLon } from '../../redux/app-reducer';
 import { useEffect } from 'react';
 import { toCelsius, toFahrenheit } from '../../common/convert';
+import { Box } from '@mui/material';
 
 type AutoType = {
   lat: number;
@@ -57,6 +58,7 @@ const Map: React.FC<PropsType> = ({ currentLocation, setCurrentLocation }) => {
     return () => {
       setCurrentLocation([currentWeather.coord.lat, currentWeather.coord.lon]);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!currentWeather) return <div></div>;
@@ -87,8 +89,31 @@ const Map: React.FC<PropsType> = ({ currentLocation, setCurrentLocation }) => {
           position={currentLocation}
         >
           <Popup>
-            {currentWeather.name || 'Unknown'}, {convertedTemp} <br /> latitude : {currentLocation[0]}
-            <br /> longitude : {currentLocation[1]}.
+            {currentWeather.name || 'Unknown'}, {convertedTemp}
+            <Box component="div">
+              <Box component="div">
+                Скорость ветра: {currentWeather.wind.speed.toFixed(0)}м/с
+              </Box>
+              <Box component="div">
+                Влажность: {currentWeather.main.humidity}%
+              </Box>
+              <Box component="div">
+                Облачность: {currentWeather.clouds.all}%
+              </Box>
+              <Box component="div">
+                Давление: {currentWeather.main.pressure}мм
+              </Box>
+              <Box component="div">
+                Видимость: {currentWeather.clouds.all}%
+              </Box>
+              <Box component="div">
+                Широта : {currentLocation[0].toFixed(4)}
+              </Box>
+              <Box component="div">
+                Долгота : {currentLocation[1].toFixed(4)}
+              </Box>
+            </Box>
+
           </Popup>
         </Marker>
       )

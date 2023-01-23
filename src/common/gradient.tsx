@@ -1,6 +1,8 @@
 import Box from '@mui/material/Box';
+import { useSelector } from 'react-redux';
 import styled from "styled-components";
-import { colPressure, toCelsius } from './convert';
+import { AppStateType } from '../redux/redux-store';
+import { colPressure, toCelsius, toFahrenheit } from './convert';
 
 const BoxGradientInfo = styled.div`
   display: flex;
@@ -48,72 +50,86 @@ function gradient(name: string): string {
   return cssGradient;
 }
 
-function infoGradient(name: string) {
+type InfoGradientType = {
+  convertedWeather: string;
+}
+
+const InfoGradient : React.FC<InfoGradientType> = ({convertedWeather}) => {
 
   let jsxInfo = null;
+  const tempUnit = useSelector((state: AppStateType) => state.app.tempUnit);
 
-  switch (name) {
+  switch (convertedWeather) {
     case 'Clouds': {
       jsxInfo = (<BoxGradientInfo>
-                  <Box component="span">0</Box>
-                  <Box component="span">20</Box>
-                  <Box component="span">40</Box>
-                  <Box component="span">60</Box>
-                  <Box component="span">80</Box>
-                  <Box component="span">100</Box>
+                  <Box component="span">0%</Box>
+                  <Box component="span">20%</Box>
+                  <Box component="span">40%</Box>
+                  <Box component="span">60%</Box>
+                  <Box component="span">80%</Box>
+                  <Box component="span">100%</Box>
                 </BoxGradientInfo>);
       break;
     }
     case 'Pressure': {
       jsxInfo = (<BoxGradientInfo>
-                  <Box component="span">{colPressure(940)}</Box>
-                  <Box component="span">{colPressure(960)}</Box>
-                  <Box component="span">{colPressure(980)}</Box>
-                  <Box component="span">{colPressure(1000)}</Box>
-                  <Box component="span">{colPressure(1020)}</Box>
-                  <Box component="span">{colPressure(1040)}</Box>
-                  <Box component="span">{colPressure(1060)}</Box>
+                  <Box component="span">{colPressure(940)}mm</Box>
+                  <Box component="span">{colPressure(960)}mm</Box>
+                  <Box component="span">{colPressure(980)}mm</Box>
+                  <Box component="span">{colPressure(1000)}mm</Box>
+                  <Box component="span">{colPressure(1020)}mm</Box>
+                  <Box component="span">{colPressure(1040)}mm</Box>
+                  <Box component="span">{colPressure(1060)}mm</Box>
                 </BoxGradientInfo>);
       break;
     }
     case 'Temperature': {
-      jsxInfo = (<BoxGradientInfo>
-                  <Box component="span">{toCelsius(228)}</Box>
-                  <Box component="span">{toCelsius(243)}</Box>
-                  <Box component="span">{toCelsius(258)}</Box>
-                  <Box component="span">{toCelsius(273)}</Box>
-                  <Box component="span">{toCelsius(288)}</Box>
-                  <Box component="span">{toCelsius(303)}</Box>
-                </BoxGradientInfo>);
+      jsxInfo = (tempUnit === "°C" ? <BoxGradientInfo>
+                  <Box component="span">{toCelsius(228)}{tempUnit}</Box>
+                  <Box component="span">{toCelsius(243)}{tempUnit}</Box>
+                  <Box component="span">{toCelsius(258)}{tempUnit}</Box>
+                  <Box component="span">{toCelsius(273)}{tempUnit}</Box>
+                  <Box component="span">{toCelsius(288)}{tempUnit}</Box>
+                  <Box component="span">{toCelsius(303)}{tempUnit}</Box>
+                </BoxGradientInfo> :
+                <BoxGradientInfo>
+                  <Box component="span">{toFahrenheit(228)}{tempUnit}</Box>
+                  <Box component="span">{toFahrenheit(243)}{tempUnit}</Box>
+                  <Box component="span">{toFahrenheit(258)}{tempUnit}</Box>
+                  <Box component="span">{toFahrenheit(273)}{tempUnit}</Box>
+                  <Box component="span">{toFahrenheit(288)}{tempUnit}</Box>
+                  <Box component="span">{toFahrenheit(303)}{tempUnit}</Box>
+                </BoxGradientInfo>
+                );
       break;
     }
     case 'Wind': {
       jsxInfo = (<BoxGradientInfo>
-                  <Box component="span">1</Box> 
-                  <Box component="span">5</Box>
-                  <Box component="span">15</Box>
-                  <Box component="span">25</Box>
-                  <Box component="span">50</Box>
-                  <Box component="span">100</Box>
+                  <Box component="span">1m/s</Box> 
+                  <Box component="span">5m/s</Box>
+                  <Box component="span">15m/s</Box>
+                  <Box component="span">25m/s</Box>
+                  <Box component="span">50m/s</Box>
+                  <Box component="span">100m/s</Box>
                 </BoxGradientInfo>);
       break;
     }
     case 'Rainfall': {
       jsxInfo = (<BoxGradientInfo>
-                  <Box component="span">0</Box>
-                  <Box component="span">1</Box>
-                  <Box component="span">5</Box>
-                  <Box component="span">10</Box>
-                  <Box component="span">100</Box>
+                  <Box component="span">0mm</Box>
+                  <Box component="span">1mm</Box>
+                  <Box component="span">5mm</Box>
+                  <Box component="span">10mm</Box>
+                  <Box component="span">100mm</Box>
                 </BoxGradientInfo>);
       break;
     }
     case 'Snow': {
       jsxInfo = (<BoxGradientInfo>
-                  <Box component="span">0</Box>
-                  <Box component="span">10</Box>
-                  <Box component="span">20</Box>
-                  <Box component="span">30</Box>
+                  <Box component="span">0mm</Box>
+                  <Box component="span">10mm</Box>
+                  <Box component="span">20mm</Box>
+                  <Box component="span">30mm</Box>
                 </BoxGradientInfo>);
       break;
     }
@@ -122,4 +138,4 @@ function infoGradient(name: string) {
   return jsxInfo;
 }
 
-export {gradient, infoGradient };
+export {gradient, InfoGradient };

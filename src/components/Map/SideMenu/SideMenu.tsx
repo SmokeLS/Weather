@@ -11,13 +11,14 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
 
-import {gradient, infoGradient} from '../../../common/gradient';
+import {gradient, InfoGradient} from '../../../common/gradient';
 import WeathersConversion from '../../../common/convertWeathers';
 import { Box } from '@mui/system';
 
 type PropsType = {
   ChangeMaps: Function;
 };
+
 type StateType = {
   Temperature: boolean;
   Wind: boolean;
@@ -52,6 +53,7 @@ const GradientBlock = styled.div<GradientType>`
 export const SideMenu: React.FC<PropsType> = ({ ChangeMaps }) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
+  
 
   const [checked, setChecked] = React.useState({
     Temperature: false,
@@ -222,9 +224,10 @@ export const SideMenu: React.FC<PropsType> = ({ ChangeMaps }) => {
             return (
               <BoxInfo key={item}>
                 {convertedWeather}
+                
                 <Box component="div" style={{alignSelf: "flex-end"}}>
                   <GradientBlock key={convertedWeather} weather={convertedWeather} />
-                  {infoGradient(convertedWeather)}
+                  <InfoGradient convertedWeather={convertedWeather} />
                 </Box>
               </BoxInfo>
             );
