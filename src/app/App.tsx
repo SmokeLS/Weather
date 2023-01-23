@@ -34,9 +34,9 @@ function App() {
 
   useEffect(() => {
  
-    if (window.sessionStorage.getItem('latitude') && window.sessionStorage.getItem('latitude')) {
-      const latitude = parseInt(window.sessionStorage.getItem('latitude') ?? "");
-      const longitude = parseInt(window.sessionStorage.getItem('longitude') ?? "");
+    if (window.sessionStorage.getItem('latitude') && window.sessionStorage.getItem('longitude')) {
+      const latitude = parseFloat(window.sessionStorage.getItem('latitude') ?? "");
+      const longitude = parseFloat(window.sessionStorage.getItem('longitude') ?? "");
 
       setCurrentLocation([latitude, longitude]);
 
@@ -58,6 +58,7 @@ function App() {
       dispatch(actions.setIsLoading(false));
     });
     
+
   }, [dispatch]);
 
   return (

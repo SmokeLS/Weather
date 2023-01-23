@@ -74,8 +74,8 @@ const Map: React.FC<PropsType> = ({ currentLocation, setCurrentLocation }) => {
           
           Promise.all([a.promise, b.promise]).then(values => {
             ready = true
-            window.sessionStorage.setItem('latitude', currentLocation[0].toString());
-            window.sessionStorage.setItem('longitude', currentLocation[1].toString());
+            window.sessionStorage.setItem('latitude', e.latlng.lat.toString());
+            window.sessionStorage.setItem('longitude', e.latlng.lng.toString());
 
             setCurrentLocation([e.latlng.lat, e.latlng.lng]);
           })
