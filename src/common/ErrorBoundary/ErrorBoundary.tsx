@@ -1,10 +1,10 @@
 import React from 'react';
 
 type PropsType = {
-  children: any
-}
+  children: React.ReactNode;
+};
 
-class ErrorBoundary extends React.Component<PropsType>{
+class ErrorBoundary extends React.Component<PropsType> {
   state = { error: null as TypeError | null, errorInfo: null as React.ErrorInfo | null };
 
   componentDidCatch(error: TypeError, errorInfo: React.ErrorInfo) {

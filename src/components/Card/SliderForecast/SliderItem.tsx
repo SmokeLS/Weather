@@ -11,7 +11,7 @@ type SliderItemProps = {
   slideMargin: number;
   onMouseDown: (event: any) => void;
   visibleSlides: number;
-  children: any
+  children: React.ReactNode;
 };
 
 const SliderItem: React.FC<SliderItemProps> = ({

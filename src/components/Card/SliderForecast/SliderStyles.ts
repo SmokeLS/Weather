@@ -5,7 +5,7 @@ type SliderWrapperProps = {
   zoomFactor: number;
   visibleSlides: number;
   slideMargin: number;
-  onMouseDown: any;
+  onMouseDown: (event: MouseEvent | TouchEvent) => void;
   onMouseUp: any;
   onTouchStart: any;
   onTouchEnd: any;
@@ -70,5 +70,3 @@ export const StyledSlider = styled.div<SliderProps>`
     transform: translateX(${(props) => props.transformValue});
   }
 `;
-
-

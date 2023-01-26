@@ -59,11 +59,11 @@ export type ForecastType = {
   cnt: number;
   list: Array<ListType>;
   city: CityType;
-  country: string,
-  population: number,
-  timezone: number,
-  sunrise: number,
-  sunset: number,
+  country: string;
+  population: number;
+  timezone: number;
+  sunrise: number;
+  sunset: number;
 };
 
 export type ListType = {
@@ -90,7 +90,7 @@ type MainListType = MainType & {
 };
 
 type CityType = {
-    id: number,
-    name: string,
-    coord: CoordinationType,
-}
+  id: number;
+  name: string;
+  coord: CoordinationType;
+};

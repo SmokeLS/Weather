@@ -85,7 +85,8 @@ export const setCurrentWeather = (
   });
 
 export const setCurrentWeatherLatLon = (
-  lat: number, lon: number
+  lat: number,
+  lon: number,
 ): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof weatherAPI, void> =>
   thunk(async (dispatch: DispatchType) => {
     const currentWeather = await weatherAPI.getCurrentWeatherLatLon(lat, lon);
@@ -100,20 +101,13 @@ export const setForecast = (
     dispatch(actions.setForecast(forecast));
   });
 
-  export const setForecastLatLon = (
-    lat: number, lon: number
-  ): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof weatherAPI, void> =>
-    thunk(async (dispatch: DispatchType) => {
-      const forecast = await weatherAPI.getForecastLatLon(lat, lon);
-      dispatch(actions.setForecast(forecast));
-    });
-// export const setMaps = (maps?: string): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof mapsAPI, void> =>
-//   thunk(async (dispatch: DispatchType) => {
-//     // dispatch(actions.setIsLoading(true));
-//     const map = await mapsAPI.getMap();
-//     //@ts-ignore
-//     dispatch(actions.setMaps(map));
-//     // dispatch(actions.setIsLoading(false));
-//   });
+export const setForecastLatLon = (
+  lat: number,
+  lon: number,
+): ThunkAction<AppStateType, ActionsType<typeof actions>, typeof weatherAPI, void> =>
+  thunk(async (dispatch: DispatchType) => {
+    const forecast = await weatherAPI.getForecastLatLon(lat, lon);
+    dispatch(actions.setForecast(forecast));
+  });
 
 export default appReducer;

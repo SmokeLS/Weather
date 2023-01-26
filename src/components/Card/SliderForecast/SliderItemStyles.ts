@@ -5,6 +5,7 @@ type Props = {
   slideMargin: number;
   visibleSlides: number;
   className: string;
+  onMouseDown: (event: MouseEvent | TouchEvent) => void;
 };
 
 export const StyledSliderItem = styled.div<Props>`
@@ -18,11 +19,7 @@ export const StyledSliderItem = styled.div<Props>`
   display: flex;
   transform: scale(1);
   user-select: none;
-  flex: 0 0
-    calc(
-      100% / ${(props) => props.visibleSlides} -
-        ${(props) => props.slideMargin * 2}px
-    );
+  flex: 0 0 calc(100% / ${(props) => props.visibleSlides} - ${(props) => props.slideMargin * 2}px);
   img {
     height: 100%;
     width: 100%;

@@ -86,7 +86,7 @@ const Card: React.FC<PropsType> = () => {
             <Temperature />
           </UpperSectionMobile>
         </MediaQuery>
-        <SliderForecast {...SliderProps} slideMargin={isLowScreenMobile ? 10: SliderProps.slideMargin}>
+        <SliderForecast {...SliderProps} slideMargin={isLowScreenMobile ? 10 : SliderProps.slideMargin}>
           {forecast.list.map((item, index) => {
             return <Forecast key={item.dt} handleOpenDialog={() => handleOpenDialog(item)} item={item} index={index} />;
           })}

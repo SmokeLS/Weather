@@ -9,18 +9,18 @@ type Props = {};
 const Switcher: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const tempUnit = useSelector((state: AppStateType) => state.app.tempUnit);
-  
-  const CheckBoxHandler = () => {
-    (tempUnit === "°C" ? dispatch(actions.setTempUnit("°F")) : dispatch(actions.setTempUnit("°C")));
-  }
 
-  const checked = tempUnit === "°F" ? true : false;
+  const CheckBoxHandler = () => {
+    tempUnit === '°C' ? dispatch(actions.setTempUnit('°F')) : dispatch(actions.setTempUnit('°C'));
+  };
+
+  const checked = tempUnit === '°F' ? true : false;
 
   return (
     <ToggleButtonCover>
       <ButtonCover>
         <Button>
-          <CheckBox type="checkbox" checked={checked} onChange={CheckBoxHandler}/>
+          <CheckBox type="checkbox" checked={checked} onChange={CheckBoxHandler} />
           <Knobs />
           <Layer />
         </Button>

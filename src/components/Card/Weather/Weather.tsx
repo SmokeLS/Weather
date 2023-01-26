@@ -57,20 +57,25 @@ const Weather: React.FC<PropsType> = () => {
     <>
       <MediaQuery minWidth={768}>
         <Wrapper>
-          <Img src={exchangePicture(currentWeather.weather[0].icon).src} alt={exchangePicture(currentWeather.weather[0].icon).alt}/>
+          <Img
+            src={exchangePicture(currentWeather.weather[0].icon).src}
+            alt={exchangePicture(currentWeather.weather[0].icon).alt}
+          />
           <TextWrapper>
             <div>{currentWeather.name}</div>
             <div>
               Давление: <span style={{ whiteSpace: 'nowrap' }}>{colPressure(currentWeather.main.pressure)} мм.</span>
             </div>
             <div>Влажность: {currentWeather.main.humidity}%</div>
-            {/* <div>{currentWeather.coord.lat} {currentWeather.coord.lon}</div> */}
           </TextWrapper>
         </Wrapper>
       </MediaQuery>
       <MediaQuery maxWidth={767}>
         <WrapperMobile>
-          <ImgMobile src={exchangePicture(currentWeather.weather[0].icon).src} alt={exchangePicture(currentWeather.weather[0].icon).alt}/>
+          <ImgMobile
+            src={exchangePicture(currentWeather.weather[0].icon).src}
+            alt={exchangePicture(currentWeather.weather[0].icon).alt}
+          />
           <TextWrapper>
             <div>{currentWeather.name}</div>
             <div>

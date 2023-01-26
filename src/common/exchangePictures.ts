@@ -11,7 +11,7 @@ import cloudyNight from '../assets/cloudy-night.png';
 import cloud from '../assets/cloud.png';
 import brokenClouds from '../assets/broken-clouds.png';
 
-const exchangePictures : Function = (name: string) => {
+const exchangePictures: Function = (name: string) => {
   switch (name) {
     case '01d': {
       return { src: sun, alt: 'sun' };
@@ -68,7 +68,7 @@ const exchangePictures : Function = (name: string) => {
       return { src: mist, alt: 'mist' };
     }
     default: {
-      return {src: '', alt: ''}
+      return { src: '', alt: '' };
     }
   }
 };

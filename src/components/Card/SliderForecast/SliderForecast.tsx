@@ -34,7 +34,7 @@ const SliderForecast: React.FC<SliderProps> = ({
   const sliderRef = useRef<HTMLElement>(null);
 
   const visibleSlides = numberOfSlides(maxVisibleSlides, scrollSize);
-  const totalPages: number = Math.ceil(children.length / visibleSlides) - 1;
+  const totalPages: number = Math.ceil(children?.length / visibleSlides) - 1;
 
   useEffect(() => {
     //@ts-ignore
@@ -52,7 +52,6 @@ const SliderForecast: React.FC<SliderProps> = ({
       sliderRef.current.style.transform = `translate3D(-${currentPage * scrollSize}px, 0, 0)`;
     }
   }, [sliderRef, currentPage, scrollSize, totalPages]);
-
 
   const disableHoverEffect = () => {
     if (sliderRef.current) sliderRef.current.style.pointerEvents = 'none';
@@ -89,7 +88,7 @@ const SliderForecast: React.FC<SliderProps> = ({
     return classes[index % visibleSlides] || '';
   };
 
-  const mouseDownHandler = (event: MouseEvent | TouchEvent) => {
+  const mouseDownHandler = (event: any) => {
     if ('clientX' in event) {
       setScrolling(event.clientX);
     } else if ('touches' in event) {
@@ -137,7 +136,7 @@ const SliderForecast: React.FC<SliderProps> = ({
         pageTransition={pageTransition}
         ref={sliderRef}
       >
-        {children.map((child: any, i: any) => (
+        {children.map((child: React.ReactNode, i: number) => (
           <SliderItem
             key={i}
             slideMargin={slideMargin}

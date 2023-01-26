@@ -5,7 +5,7 @@ const instance = axios.create({
   baseURL: 'https://api.openweathermap.org/data/2.5/',
 });
 
-const selectedLang = 'ru'
+const selectedLang = 'ru';
 
 type CountResponse = {
   count: number;
@@ -13,19 +13,27 @@ type CountResponse = {
 
 export const weatherAPI = {
   async getCurrentWeather(city: string) {
-    const res = await instance.get<WeatherType>(`weather?appid=0e2def30c3069fd2e56f866c8c70d407&q=${city}&lang=${selectedLang}`);
+    const res = await instance.get<WeatherType>(
+      `weather?appid=0e2def30c3069fd2e56f866c8c70d407&q=${city}&lang=${selectedLang}`,
+    );
     return res.data;
   },
   async getCurrentWeatherLatLon(lat: number, lon: number) {
-    const res = await instance.get<WeatherType>(`weather?appid=0e2def30c3069fd2e56f866c8c70d407&lat=${lat}&lon=${lon}&lang=${selectedLang}`);
+    const res = await instance.get<WeatherType>(
+      `weather?appid=0e2def30c3069fd2e56f866c8c70d407&lat=${lat}&lon=${lon}&lang=${selectedLang}`,
+    );
     return res.data;
   },
   async getForecast(city: string) {
-    const res = await instance.get<ForecastType>(`forecast?appid=0e2def30c3069fd2e56f866c8c70d407&q=${city}&lang=${selectedLang}`);
+    const res = await instance.get<ForecastType>(
+      `forecast?appid=0e2def30c3069fd2e56f866c8c70d407&q=${city}&lang=${selectedLang}`,
+    );
     return res.data;
   },
   async getForecastLatLon(lat: number, lon: number) {
-    const res = await instance.get<ForecastType>(`forecast?appid=0e2def30c3069fd2e56f866c8c70d407&lat=${lat}&lon=${lon}&lang=${selectedLang}`);
+    const res = await instance.get<ForecastType>(
+      `forecast?appid=0e2def30c3069fd2e56f866c8c70d407&lat=${lat}&lon=${lon}&lang=${selectedLang}`,
+    );
     return res.data;
   },
   // async getCities() {

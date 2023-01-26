@@ -19,7 +19,7 @@ const ImgWrapper = styled.div`
   }
 `;
 
-const Img = styled.img.attrs(({ src, alt}) => ({
+const Img = styled.img.attrs(({ src, alt }) => ({
   alt,
   src,
 }))`
@@ -29,7 +29,7 @@ const Img = styled.img.attrs(({ src, alt}) => ({
 type PropsType = {
   item: ListType;
   index: number;
-  handleOpenDialog: any;
+  handleOpenDialog: () => void;
 };
 
 const Forecast: React.FC<PropsType> = ({ item, index, handleOpenDialog }) => {
@@ -37,17 +37,17 @@ const Forecast: React.FC<PropsType> = ({ item, index, handleOpenDialog }) => {
   const dateHHMM = `${item.dt_txt.split(' ')[1].split(':')[0]}:${item.dt_txt.split(' ')[1].split(':')[1]}`;
 
   const tempUnit = useSelector((state: AppStateType) => state.app.tempUnit);
-  const convertedTemp = tempUnit === "°C" ? `${toCelsius(item.main.temp)}°C` : `${toFahrenheit(item.main.temp)}°F`;
+  const convertedTemp = tempUnit === '°C' ? `${toCelsius(item.main.temp)}°C` : `${toFahrenheit(item.main.temp)}°F`;
 
   return (
     <div onClick={handleOpenDialog} key={index}>
       <TextWrapper>
-        <div style={{'whiteSpace': 'pre-wrap'}}>{dateYYYYMMDD}</div>
+        <div style={{ whiteSpace: 'pre-wrap' }}>{dateYYYYMMDD}</div>
         <div>{dateHHMM}</div>
       </TextWrapper>
       <ImgWrapper>
         <div>{item.main.humidity}%</div>
-        <Img src={exchangePictures(item.weather[0].icon).src} alt={exchangePictures(item.weather[0].icon).alt}/>
+        <Img src={exchangePictures(item.weather[0].icon).src} alt={exchangePictures(item.weather[0].icon).alt} />
       </ImgWrapper>
       <TextWrapper>{convertedTemp}</TextWrapper>
     </div>

@@ -10,10 +10,11 @@ import MenuList from '@mui/material/MenuList';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Grid';
 
-import {gradient, InfoGradient} from '../../../common/gradient';
+import { gradient, InfoGradient } from '../../../common/gradient';
 import WeathersConversion from '../../../common/convertWeathers';
-import { Box } from '@mui/system';
+import useWindowDimensions from '../../../common/WindowsDimensions/WindowsDimensions';
 
 type PropsType = {
   ChangeMaps: Function;
@@ -29,8 +30,12 @@ type StateType = {
   Isobar: boolean;
 };
 
-const BoxInfo = styled.div`
-  width: 360px;
+type BoxInfoType = {
+  widthBox: boolean;
+};
+
+const BoxInfo = styled.div<BoxInfoType>`
+  width: ${(props: {widthBox: boolean}) => (props.widthBox ? '260px' : '380px')};
   height: 32px;
   padding: 0 10px;
   align-items: center;
@@ -42,18 +47,20 @@ const BoxInfo = styled.div`
 
 type GradientType = {
   weather: string;
+  widthGradient: boolean;
 };
 
 const GradientBlock = styled.div<GradientType>`
-  width: 280px;
+  width: ${(props: {widthGradient: boolean}) => (props.widthGradient ? '100%' : '300px')};
   height: 8px;
-  background: ${(props: any) => gradient(props.weather)};
+  justify-content: flex-end;
+  background: ${(props: {weather: string}) => gradient(props.weather)};
 `;
 
 export const SideMenu: React.FC<PropsType> = ({ ChangeMaps }) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
-  
+  const { width } = useWindowDimensions();
 
   const [checked, setChecked] = React.useState({
     Temperature: false,
@@ -75,7 +82,7 @@ export const SideMenu: React.FC<PropsType> = ({ ChangeMaps }) => {
     pressure_cntr: checked.Isobar,
   };
 
-  const handleToggle = (e: any) => {
+  const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
 
@@ -215,21 +222,23 @@ export const SideMenu: React.FC<PropsType> = ({ ChangeMaps }) => {
           </Popper>
         </div>
       </Stack>
-      <Stack spacing={1} zIndex={9999} position="absolute" right={20} bottom={20}>
+      <Stack spacing={1} zIndex={9999} position="absolute" right={10} bottom={10}>
         {Object.keys(maps).map((item) => {
           //@ts-ignore
           if (maps[item] && item !== 'pressure_cntr') {
             const convertedWeather = WeathersConversion(item);
 
             return (
-              <BoxInfo key={item}>
-                {convertedWeather}
-                
-                <Box component="div" style={{alignSelf: "flex-end"}}>
-                  <GradientBlock key={convertedWeather} weather={convertedWeather} />
-                  <InfoGradient convertedWeather={convertedWeather} />
-                </Box>
-              </BoxInfo>
+              <Grid container>
+                <BoxInfo widthBox={width < 600} key={item}>
+                  {width >= 600 && convertedWeather}
+
+                  <Grid component="div" xs={width < 600 && 12} sx={{ alignSelf: 'flex-end' }}>
+                    <GradientBlock widthGradient={width < 600} key={convertedWeather} weather={convertedWeather} />
+                    <InfoGradient convertedWeather={convertedWeather} />
+                  </Grid>
+                </BoxInfo>
+              </Grid>
             );
           }
 
